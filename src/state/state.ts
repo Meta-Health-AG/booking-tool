@@ -1,5 +1,5 @@
 import {create} from 'zustand';
-import {persist} from 'zustand/middleware';
+import {createJSONStorage, persist} from 'zustand/middleware';
 import {ClusterResponse} from "@/types.ts";
 
 interface AppState {
@@ -23,6 +23,7 @@ const useStore = create<AppState>()(
         }),
         {
             name: 'yuuniq-booking',
+            storage: createJSONStorage(() => sessionStorage)
         }
     )
 );
