@@ -2,6 +2,7 @@ import {createRouter, createRootRoute, createRoute} from '@tanstack/react-router
 import Layout from '@/Layout.tsx'
 import HomePage from "@/pages/HomePage.tsx";
 import EntryPage from "@/pages/EntryPage.tsx";
+import ErrorPage from "@/pages/ErrorPage.tsx";
 
 export const rootRoute = createRootRoute({
     component: Layout,
@@ -22,16 +23,24 @@ export const entryRoute = createRoute({
     })
 })
 
+export const notFoundRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: '*',
+    component: ErrorPage
+})
+
+
 export const routeTree = rootRoute.addChildren([
     homeRoute,
-    entryRoute
+    entryRoute,
+    notFoundRoute
 ])
 
 export const router = createRouter({
     routeTree,
     defaultPreload: 'intent',
     defaultPendingComponent: () => <div>Loading...</div>,
-    defaultErrorComponent: ({ error }) => <div>{error.message}</div>
+    defaultErrorComponent: () => <ErrorPage/>
 })
 
 // Router initialisieren

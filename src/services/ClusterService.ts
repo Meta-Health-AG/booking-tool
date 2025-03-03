@@ -4,7 +4,7 @@ import {useQuery} from '@tanstack/react-query';
 
 
 export const clusterService = {
-    findClustersByClusterId: async (searchClusterIds: string[]): Promise<ClusterResponse[]> => {
+    findClustersByClusterIds: async (searchClusterIds: string[]): Promise<ClusterResponse[]> => {
         // Simulate API delay
         await new Promise(resolve => setTimeout(resolve, 500));
 
@@ -15,10 +15,10 @@ export const clusterService = {
 };
 
 
-export const useClustersByMarkers = (searchClusterIds: string[]) => {
+export const useClustersByClusterIds = (searchClusterIds: string[]) => {
     return useQuery({
         queryKey: ['clusters', 'byClusterIds', searchClusterIds],
-        queryFn: () => clusterService.findClustersByClusterId(searchClusterIds)
+        queryFn: () => clusterService.findClustersByClusterIds(searchClusterIds)
     });
 };
 

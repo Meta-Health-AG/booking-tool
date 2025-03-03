@@ -6,7 +6,7 @@ function Layout() {
     return (
         <SidebarProvider>
             <DebugSidebar/>
-            <div>
+            <div className={'w-full bg-background'}>
                 <Outlet/>
             </div>
         </SidebarProvider>
