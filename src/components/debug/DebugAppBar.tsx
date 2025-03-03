@@ -9,7 +9,7 @@ import {useState} from "react";
 import useStore from "@/state/state.ts";
 
 
-export function DebugSidebar() {
+function DebugSidebar() {
     const [didKeyPress, setDidKeyPress] = useState(false);
     const {QuerySKUs, Clusters} = useStore();
 
@@ -43,3 +43,5 @@ export function DebugSidebar() {
         </Sidebar>
     )
 }
+
+export default DebugSidebar;
