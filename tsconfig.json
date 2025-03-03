@@ -13,7 +13,8 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "strict": true
+    "strict": true,
+    "incremental": false
   },
   "include": ["src", "src/vite-plugin-eslint.d.ts"]
 }

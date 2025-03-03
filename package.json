@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc --build --force && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "format": "prettier --write .",
@@ -58,9 +58,11 @@
     "vite-plugin-eslint2": "^5.0.3"
   },
   "lint-staged": {
-    "**/*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
+    "**/*.{js,jsx,ts,tsx,json,yml,md,css,scss}": [
       "prettier --write"
+    ],
+    "**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
     ]
   }
 }
