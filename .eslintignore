@@ -1,0 +1,4 @@
+shopify/
+.github/workflows/*.yml
+src/components/ui/
+
