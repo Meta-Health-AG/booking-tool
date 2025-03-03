@@ -23,6 +23,13 @@ export default [
     },
   },
   {
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
+  },
+  {
     ignores: ['shopify/', '.github/workflows/*.yml', 'src/components/ui/'],
   },
 ];
