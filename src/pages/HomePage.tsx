@@ -1,15 +1,14 @@
-import {useRedirectOnEmptyState} from "@/hooks/useRedirectOnEmptyState.ts";
+import { useRedirectOnEmptyState } from '@/hooks/useRedirectOnEmptyState.ts';
+import YuuniqMap from '@/components/YuuniqMap.tsx';
 
 function HomePage() {
-    useRedirectOnEmptyState()
+  useRedirectOnEmptyState();
 
-    return (
-        <>
-            <h1 className="text-3xl font-bold underline">
-                Hello Home!
-            </h1>
-        </>
-    )
+  return (
+    <>
+      <YuuniqMap />
+    </>
+  );
 }
 
-export default HomePage
+export default HomePage;
