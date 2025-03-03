@@ -22,4 +22,7 @@ export default [
       'react/react-in-jsx-scope': 'off',
     },
   },
+  {
+    ignores: ['shopify/', '.github/workflows/*.yml', 'src/components/ui/'],
+  },
 ];
