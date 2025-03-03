@@ -14,7 +14,9 @@
       "@/*": ["./src/*"]
     },
     "strict": true,
-    "incremental": false
+    "incremental": false,
+    "composite": false,
+    "declaration": false
   },
   "include": ["src", "src/vite-plugin-eslint.d.ts"]
 }
