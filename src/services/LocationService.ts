@@ -2,22 +2,24 @@ import { Location } from '@/types.ts';
 import { mockLocationData } from '@/mock/MockLocationData.ts';
 import { useQuery } from '@tanstack/react-query';
 
+const fuzzyMatch = (str: string, search: string): boolean => {
+  const searchLower = search.toLowerCase();
+  const strLower = str.toLowerCase();
+  return strLower.includes(searchLower);
+};
+
 export const locationService = {
-  findLocationsByCity: async (city: string): Promise<Location[]> => {
-    // Simulate API delay
+  searchLocations: async (searchTerm: string): Promise<Location[]> => {
     await new Promise((resolve) => setTimeout(resolve, 500));
+
+    if (!searchTerm) return mockLocationData;
 
     return mockLocationData.filter(
-      (location) => location.city.toLowerCase() === city.toLowerCase(),
+      (location) =>
+        fuzzyMatch(location.city, searchTerm) ||
+        fuzzyMatch(location.name, searchTerm),
     );
   },
-
-  findLocationsByType: async (type: 'doctor' | 'lab'): Promise<Location[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-
-    return mockLocationData.filter((location) => location.type === type);
-  },
-
   findAllLocations: async (): Promise<Location[]> => {
     await new Promise((resolve) => setTimeout(resolve, 500));
 
@@ -25,21 +27,13 @@ export const locationService = {
   },
 };
 
-// React Query Hooks
-export const useLocationsByCity = (city: string) => {
+export const useSearchLocations = (searchTerm: string) => {
   return useQuery({
-    queryKey: ['locations', 'byCity', city],
-    queryFn: () => locationService.findLocationsByCity(city),
+    queryKey: ['locations', 'search', searchTerm],
+    queryFn: () => locationService.searchLocations(searchTerm),
+    enabled: searchTerm.length > 0,
   });
 };
-
-export const useLocationsByType = (type: 'doctor' | 'lab') => {
-  return useQuery({
-    queryKey: ['locations', 'byType', type],
-    queryFn: () => locationService.findLocationsByType(type),
-  });
-};
-
 export const useAllLocations = () => {
   return useQuery({
     queryKey: ['locations', 'all'],

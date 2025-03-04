@@ -14,9 +14,9 @@ const SKELETON_ITEMS = ['skeleton-1', 'skeleton-2', 'skeleton-3'] as const;
 function HomePage() {
   useRedirectOnEmptyState();
   const { data: locations, isLoading } = useAllLocations();
-  const { setSelectedLocation } = useStore();
+  const { setSelectedLocation, filteredLocations } = useStore();
   const [mapCenter, setMapCenter] = useState({ lat: 46.8182, lng: 8.2275 });
-  const [mapZoom, setMapZoom] = useState(6.5);
+  const [mapZoom, setMapZoom] = useState(7);
 
   const handleLocationSelect = useCallback((location: Location) => {
     setSelectedLocation(location);
@@ -26,13 +26,16 @@ function HomePage() {
     }
   }, []);
 
+  // Verwende gefilterte oder alle Locations
+  const displayLocations = filteredLocations || locations;
+
   return (
     <div className="px-4">
       <H2 className="mb-4">Wo möchten Sie sich testen lassen?</H2>
       <SearchBar />
       <YuuniqMap
         className="mb-10"
-        locations={locations}
+        locations={displayLocations}
         center={mapCenter}
         zoom={mapZoom}
         onMarkerClick={handleLocationSelect}
@@ -40,12 +43,14 @@ function HomePage() {
         onZoomChanged={(newZoom) => setMapZoom(newZoom)}
       />
 
-      <H3 className="mb-3">Standorte in deiner Nähe</H3>
+      <H3 className="mb-3">
+        {filteredLocations ? 'Suchergebnisse' : 'Alle Standorte'}
+      </H3>
 
       <div className="space-y-4">
         {isLoading
           ? SKELETON_ITEMS.map((id) => <LocationCardSkeleton key={id} />)
-          : locations?.map((location) => (
+          : displayLocations?.map((location) => (
               <LocationCard
                 key={`${location.name}-${location.address}`}
                 location={location}

@@ -11,6 +11,8 @@ interface AppState {
   clearClusters: () => void;
   selectedLocation: Location | null;
   setSelectedLocation: (location: Location | null) => void;
+  filteredLocations: Location[] | null;
+  setFilteredLocations: (locations: Location[] | null) => void;
 }
 
 const useStore = create<AppState>()(
@@ -24,6 +26,9 @@ const useStore = create<AppState>()(
       clearClusters: () => set({ Clusters: [] }),
       selectedLocation: null,
       setSelectedLocation: (location) => set({ selectedLocation: location }),
+      filteredLocations: null,
+      setFilteredLocations: (locations) =>
+        set({ filteredLocations: locations }),
     }),
     {
       name: 'yuuniq-booking',

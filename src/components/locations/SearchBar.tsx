@@ -1,7 +1,28 @@
+import { ChangeEvent, useState, useEffect } from 'react';
 import { FiSearch } from 'react-icons/fi';
-import { Input } from '@/components/ui/input.tsx';
+import { Input } from '@/components/ui/input';
+import { useSearchLocations } from '@/services/LocationService';
+import useStore from '@/state/state';
 
 export function SearchBar() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const { data: searchResults } = useSearchLocations(searchTerm);
+  const { setFilteredLocations } = useStore();
+
+  // Reagiere auf Änderungen der searchResults
+  useEffect(() => {
+    if (!searchTerm.trim()) {
+      setFilteredLocations(null);
+    } else if (searchResults) {
+      setFilteredLocations(searchResults);
+    }
+  }, [searchResults, searchTerm, setFilteredLocations]);
+
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+  };
+
   return (
     <div className="relative mb-4">
       <FiSearch
@@ -14,7 +35,9 @@ export function SearchBar() {
                   drop-shadow-none shadow-none pl-10 text-xs
                   placeholder:text-foreground"
         height={42}
-        placeholder="Suche"
+        placeholder="Stadt oder Laborname eingeben"
+        value={searchTerm}
+        onChange={handleSearch}
       />
     </div>
   );
