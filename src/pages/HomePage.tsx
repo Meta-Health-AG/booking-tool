@@ -2,7 +2,7 @@ import { useRedirectOnEmptyState } from '@/hooks/useRedirectOnEmptyState.ts';
 import YuuniqMap from '@/components/YuuniqMap.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { FiSearch } from 'react-icons/fi';
-import { H2 } from '@/components/Typography.tsx';
+import { H2, H3 } from '@/components/Typography.tsx';
 
 function HomePage() {
   useRedirectOnEmptyState();
@@ -25,7 +25,8 @@ function HomePage() {
           placeholder={'Suche'}
         />
       </div>
-      <YuuniqMap />
+      <YuuniqMap className={'mb-10'} />
+      <H3 className={'mb-3'}>Standorte in deiner Nähe</H3>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { useSearch, useNavigate } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import useStore from '@/state/state.ts';
-import { clusterService } from '@/services/ClusterService.ts';
+import { useClustersByClusterIds } from '@/services/ClusterService.ts';
 
 function EntryPage() {
   const search = useSearch({
@@ -11,21 +11,21 @@ function EntryPage() {
   const setQuerySKUs = useStore((state) => state.setQuerySKUs);
   const setClusters = useStore((state) => state.setClusters);
 
-  useEffect(() => {
-    const fetchAndSetData = async () => {
-      const skus = search.skus as string;
-      const skuArray: string[] = skus.split(',');
+  const skuArray = search.skus.split(',');
+  const { data: clusters } = useClustersByClusterIds(skuArray);
 
+  useEffect(() => {
+    const handleData = async () => {
       setQuerySKUs(skuArray);
 
-      const clusters = await clusterService.findClustersByClusterIds(skuArray);
-      setClusters(clusters);
-
-      await navigate({ to: '/' });
+      if (clusters) {
+        setClusters(clusters);
+        await navigate({ to: '/' });
+      }
     };
 
-    fetchAndSetData().catch(console.error);
-  }, [search.skus, setQuerySKUs, setClusters, navigate]);
+    handleData().catch(console.error);
+  }, [skuArray, clusters, setQuerySKUs, setClusters, navigate]);
 
   return null;
 }
