@@ -16,7 +16,9 @@
     "strict": true,
     "incremental": false,
     "composite": false,
-    "declaration": false
+    "declaration": false,
+    "outDir": "./dist",
+    "noEmit": true
   },
-  "include": ["src", "src/vite-plugin-eslint.d.ts"]
+  "include": ["src"]
 }
