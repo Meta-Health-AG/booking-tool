@@ -1,12 +1,14 @@
 import { APIProvider, Map } from '@vis.gl/react-google-maps';
 import { mapStyles } from '@/lib/mapStyles.ts';
 import { mapRestrictions } from '@/lib/mapRestrictions.ts';
+import * as React from 'react';
+import { clsx } from 'clsx';
 
-function YuuniqMap() {
+function YuuniqMap({ className }: React.ComponentProps<'div'>) {
   return (
     <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
-      <div className="w-full aspect-map">
-        <div className="h-full px-4">
+      <div className={clsx('w-full aspect-map', className)}>
+        <div className="h-full">
           <div className="h-full rounded-lg border border-black overflow-hidden">
             <Map
               style={{ width: '100%', height: '100%' }}
@@ -23,11 +25,13 @@ function YuuniqMap() {
         </div>
       </div>
       {/* Removes the Terms of Service of the Map*/}
-      <style>{`
-                .gmnoprint, .gm-style-cc {
-                    display: none !important;
-                }
-            `}</style>
+      <style>
+        {`
+          .gmnoprint, .gm-style-cc {
+            display: none !important;
+          }
+        `}
+      </style>
     </APIProvider>
   );
 }

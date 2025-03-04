@@ -6,7 +6,7 @@ export interface OnClickHandlerProp {
   onClick?: () => void;
 }
 
-export interface isVisibleProp {
+export interface IsVisibleProp {
   isVisible?: boolean;
 }
 

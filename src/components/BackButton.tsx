@@ -1,11 +1,11 @@
 import { FaChevronLeft } from 'react-icons/fa6';
-import { ClassNameProp, isVisibleProp, OnClickHandlerProp } from '@/types.ts';
+import { ClassNameProp, IsVisibleProp, OnClickHandlerProp } from '@/types.ts';
 import { clsx } from 'clsx';
 
 interface BackButtonProps
   extends OnClickHandlerProp,
     ClassNameProp,
-    isVisibleProp {}
+    IsVisibleProp {}
 
 function BackButton({ onClick, className, isVisible }: BackButtonProps) {
   if (!onClick && import.meta.env.VITE_DEBUG === 'true') {
@@ -20,7 +20,7 @@ function BackButton({ onClick, className, isVisible }: BackButtonProps) {
 
   return (
     <div className={clsx('', className)}>
-      <FaChevronLeft onClick={onClick} />
+      <FaChevronLeft height={20} width={20} onClick={onClick} />
     </div>
   );
 }
