@@ -1,32 +1,34 @@
-import { useRedirectOnEmptyState } from '@/hooks/useRedirectOnEmptyState.ts';
-import YuuniqMap from '@/components/YuuniqMap.tsx';
-import { Input } from '@/components/ui/input.tsx';
-import { FiSearch } from 'react-icons/fi';
-import { H2, H3 } from '@/components/Typography.tsx';
+import { useRedirectOnEmptyState } from '@/hooks/useRedirectOnEmptyState';
+import YuuniqMap from '@/components/YuuniqMap';
+import { H2, H3 } from '@/components/Typography';
+import { useAllLocations } from '@/services/LocationService';
+import { SearchBar } from '@/components/locations/SearchBar.tsx';
+import { LocationCardSkeleton } from '@/components/locations/LocationCardSkeleton.tsx';
+import { LocationCard } from '@/components/locations/LocationCard.tsx';
+
+const SKELETON_ITEMS = ['skeleton-1', 'skeleton-2', 'skeleton-3'] as const;
 
 function HomePage() {
   useRedirectOnEmptyState();
+  const { data: locations, isLoading } = useAllLocations();
 
   return (
-    <div className={'px-4'}>
-      <H2 className={'mb-4'}>Wo möchten Sie sich testen lassen?</H2>
-      <div className="relative">
-        <FiSearch
-          height={14}
-          width={14}
-          className="absolute left-3 top-1/2 -translate-y-1/2 text-icon"
-        />
-        <Input
-          className={
-            'rounded-3xl border focus:outline-none focus:ring-0 ' +
-            'drop-shadow-none shadow-none mb-4 pl-10 text-xs placeholder:text-foreground'
-          }
-          height={42}
-          placeholder={'Suche'}
-        />
+    <div className="px-4">
+      <H2 className="mb-4">Wo möchten Sie sich testen lassen?</H2>
+      <SearchBar />
+      <YuuniqMap className="mb-10" />
+      <H3 className="mb-3">Standorte in deiner Nähe</H3>
+
+      <div className="space-y-4">
+        {isLoading
+          ? SKELETON_ITEMS.map((id) => <LocationCardSkeleton key={id} />)
+          : locations?.map((location) => (
+              <LocationCard
+                key={`${location.name}-${location.address}`}
+                location={location}
+              />
+            ))}
       </div>
-      <YuuniqMap className={'mb-10'} />
-      <H3 className={'mb-3'}>Standorte in deiner Nähe</H3>
     </div>
   );
 }

@@ -23,12 +23,12 @@ const createSplitHours = (): OpeningHoursDaily[] => [
 export const mockLocationData: Location[] = [
   {
     name: 'Dr. med. Müller Praxis',
-    address: 'Hauptstraße 1',
-    city: 'Berlin',
-    zip: '10115',
+    address: 'Bahnhofstrasse 21',
+    city: 'Zürich',
+    zip: '8001',
     type: 'doctor',
-    latitude: 52.52,
-    longitude: 13.405,
+    latitude: 47.3769,
+    longitude: 8.5417,
     opening_hours: {
       monday: createSplitHours(),
       tuesday: createSplitHours(),
@@ -36,17 +36,17 @@ export const mockLocationData: Location[] = [
       thursday: createSplitHours(),
       friday: createDailyHours(8, 14),
       saturday: createDailyHours(9, 12),
-      sunday: [],
+      sunday: [], // Geschlossen
     },
   },
   {
-    name: 'Zentrallabor Berlin',
-    address: 'Laborweg 42',
-    city: 'Berlin',
-    zip: '10117',
+    name: 'Medisyn',
+    address: 'Technikumstrasse 9',
+    city: 'Winterthur',
+    zip: '8400',
     type: 'lab',
-    latitude: 52.51,
-    longitude: 13.402,
+    latitude: 47.4984,
+    longitude: 8.7298,
     opening_hours: {
       monday: createDailyHours(7, 20),
       tuesday: createDailyHours(7, 20),
@@ -54,7 +54,7 @@ export const mockLocationData: Location[] = [
       thursday: createDailyHours(7, 20),
       friday: createDailyHours(7, 18),
       saturday: createDailyHours(8, 13),
-      sunday: [],
+      sunday: [], // Geschlossen
     },
   },
 ];

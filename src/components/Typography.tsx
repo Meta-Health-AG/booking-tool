@@ -1,10 +1,52 @@
 import * as React from 'react';
-import { clsx } from 'clsx';
+import { cn } from '@/lib/utils.ts';
 
 export function H2({ className, children }: React.ComponentProps<'div'>) {
-  return <p className={clsx('font-bold text-xl', className)}>{children}</p>;
+  return <p className={cn('font-bold text-xl', className)}>{children}</p>;
 }
 
 export function H3({ className, children }: React.ComponentProps<'div'>) {
-  return <p className={clsx('', className)}>{children}</p>;
+  return <p className={cn('', className)}>{children}</p>;
+}
+
+export function LocationTitle({
+  className,
+  ...props
+}: React.ComponentProps<'div'>) {
+  return (
+    <div
+      className={cn(
+        'text-[#11181C] text-base font-semibold leading-7',
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+export function SmallText({
+  className,
+  ...props
+}: React.ComponentProps<'div'>) {
+  return (
+    <div
+      className={cn('text-[#6B7280] text-sm leading-[14px]', className)}
+      {...props}
+    />
+  );
+}
+
+export function OpeningTimeText({
+  className,
+  ...props
+}: React.ComponentProps<'div'>) {
+  return (
+    <div
+      className={cn(
+        'text-[#6B7280] text-sm leading-[18px] whitespace-pre-line',
+        className,
+      )}
+      {...props}
+    />
+  );
 }
