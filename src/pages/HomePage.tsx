@@ -26,11 +26,10 @@ function HomePage() {
     }
   }, []);
 
-  // Verwende gefilterte oder alle Locations
   const displayLocations = filteredLocations || locations;
 
   return (
-    <div className="px-4">
+    <div className="px-4 mb-2">
       <H2 className="mb-4">Wo möchten Sie sich testen lassen?</H2>
       <SearchBar />
       <YuuniqMap

@@ -3,6 +3,7 @@ import { SidebarProvider } from '@/components/ui/sidebar.tsx';
 import DebugSidebar from '@/components/debug/DebugAppBar.tsx';
 import Header from '@/components/Header.tsx';
 import BackButton from '@/components/BackButton.tsx';
+import StickyPriceFooter from '@/components/StickyPriceFooter.tsx';
 
 function Layout() {
   return (
@@ -10,8 +11,10 @@ function Layout() {
       <DebugSidebar />
       <div className={'w-full bg-background'}>
         <Header />
-        <BackButton className={'pt-8 pb-6 px-3.5'} />
+        <BackButton isVisible={true} className={'pt-8 pb-6 px-3.5'} />
         <Outlet />
+        <StickyPriceFooter isVisible={false} />
+        <StickyPriceFooter />
       </div>
     </SidebarProvider>
   );

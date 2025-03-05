@@ -14,7 +14,7 @@ export const rootRoute = createRootRoute({
 
 export const homeRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/',
+  path: '/locations',
   component: HomePage,
 });
 

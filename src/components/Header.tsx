@@ -2,7 +2,7 @@ import yuuniqLogo from '@/assets/yuuniq-logo.svg';
 import { ClassNameProp } from '@/types.ts';
 import { clsx } from 'clsx';
 
-function Header({ className }: ClassNameProp) {
+function Header({ className }: Readonly<ClassNameProp>) {
   return (
     <div
       className={clsx(

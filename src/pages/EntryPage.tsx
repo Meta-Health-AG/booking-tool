@@ -20,7 +20,7 @@ function EntryPage() {
 
       if (clusters) {
         setClusters(clusters);
-        await navigate({ to: '/' });
+        await navigate({ to: '/locations' });
       }
     };
 

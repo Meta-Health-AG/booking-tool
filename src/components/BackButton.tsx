@@ -1,6 +1,7 @@
 import { FaChevronLeft } from 'react-icons/fa6';
 import { ClassNameProp, IsVisibleProp, OnClickHandlerProp } from '@/types.ts';
 import { clsx } from 'clsx';
+import { useMatchRoute } from '@tanstack/react-router';
 
 interface BackButtonProps
   extends OnClickHandlerProp,
@@ -14,7 +15,9 @@ function BackButton({ onClick, className, isVisible }: BackButtonProps) {
     };
   }
 
-  if (isVisible === false) {
+  const matchRoute = useMatchRoute();
+
+  if (matchRoute({ to: '/*' }) || !isVisible) {
     return null;
   }
 

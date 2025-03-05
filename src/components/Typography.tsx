@@ -50,3 +50,21 @@ export function OpeningTimeText({
     />
   );
 }
+
+export function H14Semi({ className, ...props }: React.ComponentProps<'div'>) {
+  return (
+    <div
+      className={cn('text-[#11181C] text-sm font-semibold', className)}
+      {...props}
+    />
+  );
+}
+
+export function H20Semi({ className, ...props }: React.ComponentProps<'div'>) {
+  return (
+    <div
+      className={cn('text-[#11181C] text-xl font-semibold', className)}
+      {...props}
+    />
+  );
+}
