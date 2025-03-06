@@ -32,7 +32,7 @@ function YuuniqCalendar({
         IconLeft,
         IconRight,
       }}
-      showOutsideDays={true}
+      showOutsideDays={false}
       fromDate={today}
       disabled={(date) => {
         today.setHours(0, 0, 0, 0);
