@@ -1,16 +1,16 @@
 {
   "name": "booking-tool",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "rm -rf dist && tsc --noEmit && vite build",
-    "lint": "eslint .",
     "preview": "vite preview",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "circular-deps-check": "npx madge --circular --extensions ts src/"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.6",
@@ -49,6 +49,7 @@
     "husky": "^8.0.0",
     "jscpd": "^4.0.5",
     "lint-staged": "^15.4.3",
+    "madge": "^8.0.0",
     "postcss": "^8.5.3",
     "prettier": "^3.5.3",
     "typescript": "~5.7.2",
@@ -57,12 +58,23 @@
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-eslint2": "^5.0.3"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx,json,yml,md,css,scss}": [
+      "eslint --fix",
       "prettier --write"
     ],
     "**/*.{js,jsx,ts,tsx}": [
-      "eslint --fix"
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "src/**/*": [
+      "depcruise --validate",
+      "git add"
     ]
   }
 }
