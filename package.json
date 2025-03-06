@@ -68,13 +68,8 @@
       "eslint --fix",
       "prettier --write"
     ],
-    "**/*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
     "src/**/*": [
-      "depcruise --validate",
-      "git add"
+      "depcruise --validate"
     ]
   }
 }

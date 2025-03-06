@@ -4,13 +4,13 @@ import {
   AdvancedMarker,
   MapEvent,
 } from '@vis.gl/react-google-maps';
-import { mapRestrictions } from '@/lib/mapRestrictions.ts';
 import * as React from 'react';
 import { cn } from '@/lib/utils.ts';
 import { Location } from '@/types';
 import useStore from '@/state/state.ts';
 import { FaHouseMedical } from 'react-icons/fa6';
 import { BiTestTube } from 'react-icons/bi';
+import { mapRestrictions } from '@/lib/constants.ts';
 
 interface YuuniqMapProps extends React.ComponentProps<'div'> {
   locations?: Location[];

@@ -8,28 +8,33 @@ import { LocationCard } from '@/components/locations/LocationCard.tsx';
 import { useState, useCallback } from 'react';
 import { Location } from '@/types';
 import useStore from '@/state/state.ts';
+import { PageBody } from '@/components/PageBody.tsx';
+import {
+  defaultMapCenter,
+  defaultMapZoom,
+  locationMapZoom,
+  SKELETON_ITEMS,
+} from '@/lib/constants.ts';
 
-const SKELETON_ITEMS = ['skeleton-1', 'skeleton-2', 'skeleton-3'] as const;
-
-function HomePage() {
+function LocationsPage() {
   useRedirectOnEmptyState();
   const { data: locations, isLoading } = useAllLocations();
   const { setSelectedLocation, filteredLocations } = useStore();
-  const [mapCenter, setMapCenter] = useState({ lat: 46.8182, lng: 8.2275 });
-  const [mapZoom, setMapZoom] = useState(7);
+  const [mapCenter, setMapCenter] = useState(defaultMapCenter);
+  const [mapZoom, setMapZoom] = useState(defaultMapZoom);
 
   const handleLocationSelect = useCallback((location: Location) => {
     setSelectedLocation(location);
     if (location.latitude && location.longitude) {
       setMapCenter({ lat: location.latitude, lng: location.longitude });
-      setMapZoom(13);
+      setMapZoom(locationMapZoom);
     }
   }, []);
 
   const displayLocations = filteredLocations || locations;
 
   return (
-    <div className="px-4 mb-2">
+    <PageBody>
       <H2 className="mb-4">Wo möchten Sie sich testen lassen?</H2>
       <SearchBar />
       <YuuniqMap
@@ -57,8 +62,8 @@ function HomePage() {
               />
             ))}
       </div>
-    </div>
+    </PageBody>
   );
 }
 
-export default HomePage;
+export default LocationsPage;
