@@ -21,8 +21,12 @@ function StickyPriceFooter({
 
   const content = (
     <div className={'flex justify-between items-center pb-3'}>
-      <H14Semi>Gesamt ({Clusters.length} Produkte)</H14Semi>
-      <H20Semi>{calculateTotalPriceWithCurrency(Clusters)}</H20Semi>
+      <H14Semi className={`${!isVisible ? 'text-transparent' : ''}`}>
+        Gesamt ({Clusters.length} Produkte)
+      </H14Semi>
+      <H20Semi className={`${!isVisible ? 'text-transparent' : ''}`}>
+        {calculateTotalPriceWithCurrency(Clusters)}
+      </H20Semi>
     </div>
   );
 
