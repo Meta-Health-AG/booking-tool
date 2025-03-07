@@ -5,6 +5,10 @@ export function H2({ className, children }: React.ComponentProps<'div'>) {
   return <p className={cn('font-bold text-xl', className)}>{children}</p>;
 }
 
+export function H2W600({ className, children }: React.ComponentProps<'div'>) {
+  return <p className={cn('font-semibold text-xl', className)}>{children}</p>;
+}
+
 export function H3({ className, children }: React.ComponentProps<'div'>) {
   return <p className={cn('', className)}>{children}</p>;
 }

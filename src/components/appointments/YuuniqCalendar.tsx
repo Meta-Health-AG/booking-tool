@@ -26,7 +26,7 @@ function YuuniqCalendar({
       selected={date}
       onSelect={setDate}
       locale={de}
-      className={cn('w-full', className)}
+      className={cn('w-full p-0', className)}
       classNames={calendarStyling}
       components={{
         IconLeft,
