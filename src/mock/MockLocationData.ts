@@ -22,6 +22,7 @@ const createSplitHours = (): OpeningHoursDaily[] => [
 
 export const mockLocationData: Location[] = [
   {
+    id: 'loc1',
     name: 'Dr. med. Müller Praxis',
     address: 'Bahnhofstrasse 21',
     city: 'Zürich',
@@ -40,6 +41,7 @@ export const mockLocationData: Location[] = [
     },
   },
   {
+    id: 'loc2',
     name: 'Medisyn',
     address: 'Technikumstrasse 9',
     city: 'Winterthur',

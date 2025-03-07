@@ -55,6 +55,21 @@ export function OpeningTimeText({
   );
 }
 
+export function Size12W400({
+  className,
+  ...props
+}: React.ComponentProps<'div'>) {
+  return (
+    <div
+      className={cn(
+        'text-[#707070] text-xs leading-[18px] whitespace-pre-line',
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
 export function H14Semi({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div

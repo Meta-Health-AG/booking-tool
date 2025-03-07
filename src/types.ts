@@ -22,6 +22,7 @@ export interface ClusterResponse {
 type LocationType = 'doctor' | 'lab';
 
 export interface Location {
+  id: string;
   name: string;
   address: string;
   city: string;
@@ -45,4 +46,8 @@ export interface OpeningHoursWeekly {
   friday: OpeningHoursDaily[];
   saturday: OpeningHoursDaily[];
   sunday: OpeningHoursDaily[];
+}
+
+export interface AvailableDates {
+  dates: string[];
 }

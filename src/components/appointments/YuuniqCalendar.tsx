@@ -7,6 +7,9 @@ import {
 } from '@/components/appointments/CalendarButtons.tsx';
 import * as React from 'react';
 import { cn } from '@/lib/utils.ts';
+import { useAvailableDates } from '@/services/AppointmentService.ts';
+import { startOfDay, isSameDay } from 'date-fns';
+import { CalendarSkeleton } from '@/components/appointments/CalendarSkeleton.tsx';
 
 interface YuuniqCalendarProps extends React.ComponentProps<'div'> {
   date: Date | undefined;
@@ -18,7 +21,15 @@ function YuuniqCalendar({
   date,
   setDate,
 }: Readonly<YuuniqCalendarProps>) {
-  const today = new Date();
+  const today = startOfDay(new Date());
+  const { data: availableDates, isLoading } = useAvailableDates();
+
+  const availableDateObjects =
+    availableDates?.dates.map((dateStr) => new Date(dateStr)) ?? [];
+
+  if (isLoading) {
+    return <CalendarSkeleton className={className} />;
+  }
 
   return (
     <Calendar
@@ -35,8 +46,11 @@ function YuuniqCalendar({
       showOutsideDays={false}
       fromDate={today}
       disabled={(date) => {
-        today.setHours(0, 0, 0, 0);
-        return date < today;
+        if (date < today) return true;
+
+        return !availableDateObjects.some((availableDate) =>
+          isSameDay(date, availableDate),
+        );
       }}
     />
   );

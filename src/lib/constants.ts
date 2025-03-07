@@ -1,10 +1,25 @@
 import { cn } from '@/lib/utils.ts';
 
-export const SKELETON_ITEMS = [
-  'skeleton-1',
-  'skeleton-2',
-  'skeleton-3',
-] as const;
+export const SKELETON_ITEMS = ['skeleton-1', 'skeleton-2', 'skeleton-3'];
+
+export const CALENDAR_HEADER_SKELETON_ITEMS = [
+  'header-skeleton-monday',
+  'header-skeleton-tuesday',
+  'header-skeleton-wednesday',
+  'header-skeleton-thursday',
+  'header-skeleton-friday',
+  'header-skeleton-saturday',
+  'header-skeleton-sunday',
+];
+
+export const CALENDAR_WEEK_SKELETON_ITEMS = [
+  'week-skeleton-1',
+  'week-skeleton-2',
+  'week-skeleton-3',
+  'week-skeleton-4',
+  'week-skeleton-5',
+  'week-skeleton-6',
+];
 
 export const defaultMapCenter = { lat: 46.8182, lng: 8.2275 };
 
