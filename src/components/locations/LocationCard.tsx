@@ -12,19 +12,23 @@ import { cn } from '@/lib/utils.ts';
 
 interface LocationCardProps {
   location: Location;
-  onSelect: (location: Location) => void;
+  onClick?: (location: Location) => void;
+  className?: string;
 }
 
 export function LocationCard({
   location,
-  onSelect,
+  onClick,
+  className,
 }: Readonly<LocationCardProps>) {
   const { selectedLocation } = useStore();
   const IconComponent =
     location.type === 'doctor' ? FaHouseMedical : BiTestTube;
 
   const handleClick = () => {
-    onSelect(location);
+    if (onClick) {
+      onClick(location);
+    }
   };
 
   return (
@@ -34,6 +38,7 @@ export function LocationCard({
         selectedLocation?.name === location.name
           ? 'border-black'
           : 'border-input',
+        className,
       )}
       onClick={handleClick}
     >

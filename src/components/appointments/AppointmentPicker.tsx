@@ -31,7 +31,7 @@ function AppointmentPicker({
 
   useEffect(() => {
     if (selectedLocation?.id && formattedDate) {
-      refetch().then();
+      refetch({ cancelRefetch: true }).then();
     }
   }, [selectedLocation?.id, formattedDate, refetch]);
 

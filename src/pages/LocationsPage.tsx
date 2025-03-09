@@ -58,7 +58,7 @@ function LocationsPage() {
               <LocationCard
                 key={`${location.name}-${location.address}`}
                 location={location}
-                onSelect={handleLocationSelect}
+                onClick={handleLocationSelect}
               />
             ))}
       </div>

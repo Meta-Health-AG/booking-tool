@@ -49,5 +49,6 @@ export const useAvailableTimeslots = (providerId: string, date: string) => {
       appointmentService.getAvailableTimeslotsByDate(providerId, date),
     enabled: !!providerId && !!date,
     staleTime: 0,
+    gcTime: 0,
   });
 };
