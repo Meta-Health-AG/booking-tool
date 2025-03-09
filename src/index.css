@@ -128,3 +128,19 @@
 .aspect-map {
   aspect-ratio: 1 / 0.8;
 }
+
+.rdp {
+  --rdp-cell-size: 40px;
+  --rdp-accent-color: #000000;
+  --rdp-background-color: rgba(0, 0, 0, 0.1);
+  margin: 1em;
+}
+
+.rdp-day_selected:hover {
+  background-color: #000000 !important;
+}
+
+.rdp-day_selected {
+  background-color: #000000 !important;
+  color: white !important;
+}

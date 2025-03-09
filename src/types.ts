@@ -62,3 +62,15 @@ export interface AppointmentSlot {
   end_time: string;
   is_available: boolean;
 }
+
+export interface PersonalInformation {
+  vorname: string;
+  nachname: string;
+  email: string;
+  geburtsdatum: Date;
+  geschlecht: 'maennlich' | 'weiblich' | 'divers';
+  strasse: string;
+  plz: string;
+  stadt: string;
+  ahvNummer: string;
+}
