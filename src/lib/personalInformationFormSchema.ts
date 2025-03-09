@@ -15,7 +15,10 @@ export const formSchema = z.object({
   stadt: z.string().min(2, 'Stadt muss mindestens 2 Zeichen lang sein'),
   ahvNummer: z
     .string()
-    .regex(/^\d{13}$/, 'AHV-Nummer muss 13 Ziffern enthalten'),
+    .regex(
+      /^756\.\d{4}\.\d{4}\.\d{2}$/,
+      'AHV-Nummer muss im Format 756.####.####.## sein',
+    ),
 });
 
 export type FormValues = z.infer<typeof formSchema>;
