@@ -21,6 +21,15 @@ export const CALENDAR_WEEK_SKELETON_ITEMS = [
   'week-skeleton-6',
 ];
 
+export const APPOINTMENT_SKELETONS = [
+  'appointment-skeleton-1',
+  'appointment-skeleton-2',
+  'appointment-skeleton-3',
+  'appointment-skeleton-4',
+  'appointment-skeleton-5',
+  'appointment-skeleton-6',
+];
+
 export const defaultMapCenter = { lat: 46.8182, lng: 8.2275 };
 
 export const defaultMapZoom = 7;

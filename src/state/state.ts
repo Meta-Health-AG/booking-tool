@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { ClusterResponse, Location } from '@/types.ts';
+import { AppointmentSlot, ClusterResponse, Location } from '@/types.ts';
 
 interface AppState {
   QuerySKUs: string[];
@@ -13,6 +13,8 @@ interface AppState {
   setSelectedLocation: (location: Location | null) => void;
   filteredLocations: Location[] | null;
   setFilteredLocations: (locations: Location[] | null) => void;
+  selectedAppointmentSlot: AppointmentSlot | null;
+  setSelectedAppointmentSlot: (slot: AppointmentSlot | null) => void;
 }
 
 const useStore = create<AppState>()(
@@ -29,6 +31,9 @@ const useStore = create<AppState>()(
       filteredLocations: null,
       setFilteredLocations: (locations) =>
         set({ filteredLocations: locations }),
+      selectedAppointmentSlot: null,
+      setSelectedAppointmentSlot: (slot) =>
+        set({ selectedAppointmentSlot: slot }),
     }),
     {
       name: 'yuuniq-booking',

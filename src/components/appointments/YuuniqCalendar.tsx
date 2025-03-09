@@ -5,14 +5,14 @@ import {
   IconLeft,
   IconRight,
 } from '@/components/appointments/CalendarButtons.tsx';
-import * as React from 'react';
 import { cn } from '@/lib/utils.ts';
 import { useAvailableDates } from '@/services/AppointmentService.ts';
 import { startOfDay, isSameDay } from 'date-fns';
 import { CalendarSkeleton } from '@/components/appointments/CalendarSkeleton.tsx';
 import useStore from '@/state/state.ts';
+import { ComponentProps, useEffect } from 'react';
 
-interface YuuniqCalendarProps extends React.ComponentProps<'div'> {
+interface YuuniqCalendarProps extends ComponentProps<'div'> {
   date: Date | undefined;
   setDate: (date: Date | undefined) => void;
 }
@@ -39,16 +39,13 @@ function YuuniqCalendar({
     );
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (availableDateObjects.length > 0) {
-      // Sortiere die verfügbaren Daten chronologisch
       const sortedDates = [...availableDateObjects].sort(
         (a, b) => a.getTime() - b.getTime(),
       );
 
-      // Wenn das aktuelle Datum nicht verfügbar ist oder kein Datum ausgewählt ist
       if (!date || !isDateAvailable(date)) {
-        // Finde das erste verfügbare Datum
         const nextAvailableDate = sortedDates.find((date) =>
           isDateAvailable(date),
         );

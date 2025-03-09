@@ -79,6 +79,18 @@ export function H14Semi({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
+export function Size14Normal({
+  className,
+  ...props
+}: React.ComponentProps<'div'>) {
+  return (
+    <div
+      className={cn('text-[#344054] text-sm font-normal', className)}
+      {...props}
+    />
+  );
+}
+
 export function H20Semi({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
