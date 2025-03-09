@@ -10,7 +10,7 @@ import useStore from '@/state/state.ts';
 
 function DebugSidebar() {
   const [didKeyPress, setDidKeyPress] = useState(false);
-  const { QuerySKUs, Clusters } = useStore();
+  const { QuerySKUs, Clusters, selectedLocation } = useStore();
 
   useKeyPress(['Control', 'Shift', 'A'], () => {
     setDidKeyPress(!didKeyPress);
@@ -24,21 +24,26 @@ function DebugSidebar() {
         <p>DEBUG ONLY</p>
       </SidebarHeader>
       <SidebarContent className={'bg-red-300'}>
-        <SidebarGroup />
-        <p>QuerySKUs: {QuerySKUs.length}</p>
-        {QuerySKUs.toString()}
-        <SidebarGroup />
-        <SidebarGroup />
-        <p>Clusters: {QuerySKUs.length}</p>
-        {Clusters.map((Cluster) => (
-          <div key={Cluster.cluster_id}>
-            <p>{Cluster.name}</p>
-            <p>
-              {Cluster.price} {Cluster.currency}
-            </p>
-          </div>
-        ))}
-        <SidebarGroup />
+        <SidebarGroup>
+          <p>QuerySKUs: {QuerySKUs.length}</p>
+          {QuerySKUs.toString()}
+        </SidebarGroup>
+        <SidebarGroup>
+          <p>Clusters: {QuerySKUs.length}</p>
+          {Clusters.map((Cluster) => (
+            <div key={Cluster.cluster_id}>
+              <p>{Cluster.name}</p>
+              <p>
+                {Cluster.price} {Cluster.currency}
+              </p>
+            </div>
+          ))}
+        </SidebarGroup>
+        <SidebarGroup>
+          <p>Selected Location</p>
+          <p>{selectedLocation?.id}</p>
+          <p>{selectedLocation?.name}</p>
+        </SidebarGroup>
       </SidebarContent>
     </Sidebar>
   );

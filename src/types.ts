@@ -51,3 +51,14 @@ export interface OpeningHoursWeekly {
 export interface AvailableDates {
   dates: string[];
 }
+
+export interface AvailableAppointmentSlots {
+  date: string;
+  available_slots: AppointmentSlot[];
+}
+
+export interface AppointmentSlot {
+  start_time: string;
+  end_time: string;
+  is_available: boolean;
+}

@@ -6,7 +6,6 @@ export const clusterService = {
   findClustersByClusterIds: async (
     searchClusterIds: string[],
   ): Promise<ClusterResponse[]> => {
-    // Simulate API delay
     await new Promise((resolve) => setTimeout(resolve, 500));
 
     return mockClusterData.filter((cluster) =>

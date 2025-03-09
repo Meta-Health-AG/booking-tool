@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils.ts';
 import { useAvailableDates } from '@/services/AppointmentService.ts';
 import { startOfDay, isSameDay } from 'date-fns';
 import { CalendarSkeleton } from '@/components/appointments/CalendarSkeleton.tsx';
+import useStore from '@/state/state.ts';
 
 interface YuuniqCalendarProps extends React.ComponentProps<'div'> {
   date: Date | undefined;
@@ -22,10 +23,42 @@ function YuuniqCalendar({
   setDate,
 }: Readonly<YuuniqCalendarProps>) {
   const today = startOfDay(new Date());
-  const { data: availableDates, isLoading } = useAvailableDates();
+  const { selectedLocation } = useStore();
+
+  const { data: availableDates, isLoading } = useAvailableDates(
+    selectedLocation?.id,
+  );
 
   const availableDateObjects =
     availableDates?.dates.map((dateStr) => new Date(dateStr)) ?? [];
+
+  const isDateAvailable = (dateToCheck: Date) => {
+    if (dateToCheck < today) return false;
+    return availableDateObjects.some((availableDate) =>
+      isSameDay(dateToCheck, availableDate),
+    );
+  };
+
+  React.useEffect(() => {
+    if (availableDateObjects.length > 0) {
+      // Sortiere die verfügbaren Daten chronologisch
+      const sortedDates = [...availableDateObjects].sort(
+        (a, b) => a.getTime() - b.getTime(),
+      );
+
+      // Wenn das aktuelle Datum nicht verfügbar ist oder kein Datum ausgewählt ist
+      if (!date || !isDateAvailable(date)) {
+        // Finde das erste verfügbare Datum
+        const nextAvailableDate = sortedDates.find((date) =>
+          isDateAvailable(date),
+        );
+
+        if (nextAvailableDate) {
+          setDate(nextAvailableDate);
+        }
+      }
+    }
+  }, [availableDateObjects, date, setDate, today]);
 
   if (isLoading) {
     return <CalendarSkeleton className={className} />;
@@ -45,13 +78,7 @@ function YuuniqCalendar({
       }}
       showOutsideDays={false}
       fromDate={today}
-      disabled={(date) => {
-        if (date < today) return true;
-
-        return !availableDateObjects.some((availableDate) =>
-          isSameDay(date, availableDate),
-        );
-      }}
+      disabled={(date) => !isDateAvailable(date)}
     />
   );
 }
