@@ -62,14 +62,19 @@ function DebugSidebar() {
         <SidebarGroup>
           <p>Personal Information</p>
           <p>
-            {personalInformation?.vorname} {personalInformation?.nachname}
+            {personalInformation?.vorname ?? ''}{' '}
+            {personalInformation?.nachname ?? ''}
           </p>
-          <p>{personalInformation?.geburtsdatum.toISOString()}</p>
-          <p>{personalInformation?.email}</p>
-          <p>{personalInformation?.ahvNummer}</p>
-          <p>{personalInformation?.strasse}</p>
           <p>
-            {personalInformation?.plz} {personalInformation?.stadt}
+            {personalInformation?.geburtsdatum
+              ? personalInformation.geburtsdatum.toISOString()
+              : ''}
+          </p>
+          <p>{personalInformation?.email ?? ''}</p>
+          <p>{personalInformation?.ahvNummer ?? ''}</p>
+          <p>{personalInformation?.strasse ?? ''}</p>
+          <p>
+            {personalInformation?.plz ?? ''} {personalInformation?.stadt ?? ''}
           </p>
         </SidebarGroup>
       </SidebarContent>

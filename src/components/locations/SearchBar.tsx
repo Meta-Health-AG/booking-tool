@@ -31,7 +31,7 @@ export function SearchBar() {
         className="absolute left-3 top-1/2 -translate-y-1/2 text-icon"
       />
       <Input
-        className="rounded-3xl border focus:outline-none focus:ring-0
+        className="rounded-3xl bg-white border focus:outline-none focus:ring-0
                   drop-shadow-none shadow-none pl-10 text-xs
                   placeholder:text-foreground"
         height={42}

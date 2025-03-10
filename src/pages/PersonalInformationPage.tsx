@@ -61,9 +61,17 @@ function PersonalInformationPage() {
     mode: 'onChange',
   });
 
-  const onSubmit = (data: PersonalInformation) => {
-    setPersonalInformation(data);
-  };
+  form.watch((data) => {
+    if (
+      Object.keys(data).some(
+        (key) =>
+          data[key as keyof PersonalInformation] !== undefined &&
+          data[key as keyof PersonalInformation] !== '',
+      )
+    ) {
+      setPersonalInformation(data as PersonalInformation);
+    }
+  });
 
   return (
     <PageBody className={'pb-12'}>
@@ -75,7 +83,7 @@ function PersonalInformationPage() {
         </Link>
       </SmallText>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form className="space-y-6">
           <div className="grid grid-cols-1 gap-6">
             <FormTextField
               control={form.control}
@@ -109,7 +117,7 @@ function PersonalInformationPage() {
                         defaultValue={field.value}
                       >
                         <FormControl>
-                          <SelectTrigger className="bg-white text-sm rounded-xl border-input py-6 px-4">
+                          <SelectTrigger className="bg-white text-sm w-full rounded-xl border-input py-6 px-4">
                             <SelectValue placeholder="Geschlecht wählen" />
                           </SelectTrigger>
                         </FormControl>
@@ -153,8 +161,22 @@ function PersonalInformationPage() {
                           <DayPicker
                             mode="single"
                             selected={field.value}
+                            defaultMonth={field.value || undefined}
                             onSelect={(date) => {
-                              field.onChange(date);
+                              if (date) {
+                                const localDate = new Date(
+                                  Date.UTC(
+                                    date.getFullYear(),
+                                    date.getMonth(),
+                                    date.getDate(),
+                                    12,
+                                    0,
+                                    0,
+                                    0,
+                                  ),
+                                );
+                                field.onChange(localDate);
+                              }
                               setIsCalendarOpen(false);
                             }}
                             locale={de}
