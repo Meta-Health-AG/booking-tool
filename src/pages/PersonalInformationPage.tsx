@@ -18,10 +18,13 @@ import {
 import useStore from '@/state/state';
 import { DayPicker } from 'react-day-picker';
 import { de } from 'date-fns/locale';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/utils';
 import { format } from 'date-fns';
 import 'react-day-picker/dist/style.css';
-import { formSchema, FormValues } from '@/lib/personalInformationFormSchema';
+import {
+  personalInformationFormSchema,
+  PersonalInformation,
+} from '@/utils/formSchemas.ts';
 import { CalendarIcon } from 'lucide-react';
 import { useState } from 'react';
 import { FormTextField } from '@/components/FormTextField';
@@ -41,8 +44,8 @@ function PersonalInformationPage() {
   const personalInformation = useStore((state) => state.personalInformation);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<PersonalInformation>({
+    resolver: zodResolver(personalInformationFormSchema),
     defaultValues: personalInformation || {
       vorname: '',
       nachname: '',
@@ -57,7 +60,7 @@ function PersonalInformationPage() {
     mode: 'onChange',
   });
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = (data: PersonalInformation) => {
     setPersonalInformation(data);
   };
 

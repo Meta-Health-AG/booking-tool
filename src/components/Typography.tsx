@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cn } from '@/lib/utils.ts';
+import { cn } from '@/utils/utils.ts';
 
 export function H2({ className, children }: React.ComponentProps<'div'>) {
   return <p className={cn('font-bold text-xl', className)}>{children}</p>;

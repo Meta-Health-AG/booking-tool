@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
   CALENDAR_HEADER_SKELETON_ITEMS,
   CALENDAR_WEEK_SKELETON_ITEMS,
-} from '@/lib/constants.ts';
+} from '@/utils/constants.ts';
 
 export function CalendarSkeleton({ className }: React.ComponentProps<'div'>) {
   return (

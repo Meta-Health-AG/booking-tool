@@ -1,6 +1,6 @@
 import * as z from 'zod';
 
-export const formSchema = z.object({
+export const personalInformationFormSchema = z.object({
   vorname: z.string().min(2, 'Vorname muss mindestens 2 Zeichen lang sein'),
   nachname: z.string().min(2, 'Nachname muss mindestens 2 Zeichen lang sein'),
   email: z.string().email('Ungültige E-Mail-Adresse'),
@@ -21,4 +21,11 @@ export const formSchema = z.object({
     ),
 });
 
-export type FormValues = z.infer<typeof formSchema>;
+export type PersonalInformation = z.infer<typeof personalInformationFormSchema>;
+
+export const loginFormSchema = z.object({
+  email: z.string().email('Ungültige E-Mail-Adresse'),
+  password: z.string().min(2, 'Ungültiges Passwort'),
+});
+
+export type Login = z.infer<typeof loginFormSchema>;

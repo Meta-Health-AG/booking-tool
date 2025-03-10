@@ -22,6 +22,8 @@ interface AppState {
   setSelectedAppointmentSlot: (slot: AppointmentSlot | null) => void;
   personalInformation: PersonalInformation | null;
   setPersonalInformation: (info: PersonalInformation) => void;
+  auth0id: string | null;
+  setAuth0id: (id: string | null) => void;
 }
 
 const useStore = create<AppState>()(
@@ -43,6 +45,8 @@ const useStore = create<AppState>()(
         set({ selectedAppointmentSlot: slot }),
       personalInformation: null,
       setPersonalInformation: (info) => set({ personalInformation: info }),
+      auth0id: null,
+      setAuth0id: (id) => set({ auth0id: id }),
     }),
     {
       name: 'yuuniq-booking',

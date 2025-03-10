@@ -14,7 +14,7 @@ import {
   defaultMapZoom,
   locationMapZoom,
   SKELETON_ITEMS,
-} from '@/lib/constants.ts';
+} from '@/utils/constants.ts';
 
 function LocationsPage() {
   useRedirectOnEmptyState();

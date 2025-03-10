@@ -1,5 +1,5 @@
 import { ComponentProps } from 'react';
-import { cn } from '@/lib/utils.ts';
+import { cn } from '@/utils/utils.ts';
 
 interface DividerProps extends ComponentProps<'div'> {
   height?: number;

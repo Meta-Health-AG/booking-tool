@@ -5,12 +5,12 @@ import {
   MapEvent,
 } from '@vis.gl/react-google-maps';
 import * as React from 'react';
-import { cn } from '@/lib/utils.ts';
+import { cn } from '@/utils/utils.ts';
 import { Location } from '@/types';
 import useStore from '@/state/state.ts';
 import { FaHouseMedical } from 'react-icons/fa6';
 import { BiTestTube } from 'react-icons/bi';
-import { mapRestrictions } from '@/lib/constants.ts';
+import { mapRestrictions } from '@/utils/constants.ts';
 
 interface YuuniqMapProps extends React.ComponentProps<'div'> {
   locations?: Location[];

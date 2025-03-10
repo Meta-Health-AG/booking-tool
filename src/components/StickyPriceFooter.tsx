@@ -1,8 +1,8 @@
 import { ClassNameProp, IsVisibleProp } from '@/types.ts';
-import { cn } from '@/lib/utils.ts';
+import { cn } from '@/utils/utils.ts';
 import { Button } from '@/components/ui/button.tsx';
 import useStore from '@/state/state.ts';
-import { calculateTotalPriceWithCurrency } from '@/lib/calculateTotalPriceWithCurrency.ts';
+import { calculateTotalPriceWithCurrency } from '@/utils/calculateTotalPriceWithCurrency.ts';
 import { H14Semi, H20Semi } from '@/components/Typography.tsx';
 import { useMatchRoute } from '@tanstack/react-router';
 

@@ -1,7 +1,7 @@
 import { ComponentProps } from 'react';
 import { ClusterResponse } from '@/types.ts';
 import { H14Semi, Size14Normal } from '@/components/Typography.tsx';
-import { cn } from '@/lib/utils.ts';
+import { cn } from '@/utils/utils.ts';
 
 interface BookingOverviewProps extends ComponentProps<'div'> {
   cluster: ClusterResponse;

@@ -1,11 +1,11 @@
-import { calendarStyling } from '@/lib/constants.ts';
+import { calendarStyling } from '@/utils/constants.ts';
 import { Calendar } from '@/components/ui/calendar.tsx';
 import { de } from 'date-fns/locale';
 import {
   IconLeft,
   IconRight,
 } from '@/components/appointments/CalendarButtons.tsx';
-import { cn } from '@/lib/utils.ts';
+import { cn } from '@/utils/utils.ts';
 import { useAvailableDates } from '@/services/AppointmentService.ts';
 import { startOfDay, isSameDay } from 'date-fns';
 import { CalendarSkeleton } from '@/components/appointments/CalendarSkeleton.tsx';

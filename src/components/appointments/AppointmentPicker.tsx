@@ -1,11 +1,11 @@
 import { ComponentProps, useEffect } from 'react';
-import { cn } from '@/lib/utils.ts';
+import { cn } from '@/utils/utils.ts';
 import { useAvailableTimeslots } from '@/services/AppointmentService.ts';
 import useStore from '@/state/state.ts';
 import { format } from 'date-fns';
 import AppointmentCard from '@/components/appointments/AppointmentCard.tsx';
 import AppointmentCardSkeleton from '@/components/appointments/AppointmentCardSkeleton.tsx';
-import { APPOINTMENT_SKELETONS } from '@/lib/constants.ts';
+import { APPOINTMENT_SKELETONS } from '@/utils/constants.ts';
 
 interface AppointmentPickerProps extends ComponentProps<'div'> {
   date: Date | undefined;

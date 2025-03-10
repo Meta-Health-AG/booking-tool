@@ -1,5 +1,5 @@
 import { ComponentProps } from 'react';
-import { cn } from '@/lib/utils.ts';
+import { cn } from '@/utils/utils.ts';
 import { AppointmentSlot } from '@/types.ts';
 import { format } from 'date-fns';
 import { Size14Normal } from '@/components/Typography.tsx';

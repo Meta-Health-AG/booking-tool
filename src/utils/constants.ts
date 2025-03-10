@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils.ts';
+import { cn } from '@/utils/utils.ts';
 
 export const SKELETON_ITEMS = ['skeleton-1', 'skeleton-2', 'skeleton-3'];
 

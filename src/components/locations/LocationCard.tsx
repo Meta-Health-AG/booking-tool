@@ -5,10 +5,10 @@ import {
   SmallText,
   OpeningTimeText,
 } from '@/components/Typography';
-import { formatOpeningHours } from '@/lib/openingHoursFormatter';
+import { formatOpeningHours } from '@/utils/openingHoursFormatter';
 import { Location } from '@/types';
 import useStore from '@/state/state.ts';
-import { cn } from '@/lib/utils.ts';
+import { cn } from '@/utils/utils.ts';
 
 interface LocationCardProps {
   location: Location;

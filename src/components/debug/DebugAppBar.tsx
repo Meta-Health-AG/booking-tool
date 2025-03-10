@@ -7,10 +7,12 @@ import {
 import { useKeyPress } from 'react-haiku';
 import { useState } from 'react';
 import useStore from '@/state/state.ts';
+import { format } from 'date-fns';
 
 function DebugSidebar() {
   const [didKeyPress, setDidKeyPress] = useState(false);
-  const { QuerySKUs, Clusters, selectedLocation } = useStore();
+  const { QuerySKUs, Clusters, selectedLocation, selectedAppointmentSlot } =
+    useStore();
 
   useKeyPress(['Control', 'Shift', 'A'], () => {
     setDidKeyPress(!didKeyPress);
@@ -43,6 +45,14 @@ function DebugSidebar() {
           <p>Selected Location</p>
           <p>{selectedLocation?.id}</p>
           <p>{selectedLocation?.name}</p>
+        </SidebarGroup>
+        <SidebarGroup>
+          <p>Selected Appointment</p>
+          <p>
+            {selectedAppointmentSlot?.start_time
+              ? format(new Date(selectedAppointmentSlot.start_time), 'HH:mm')
+              : '-'}
+          </p>
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
