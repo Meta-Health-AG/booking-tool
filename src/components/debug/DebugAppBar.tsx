@@ -11,8 +11,13 @@ import { format } from 'date-fns';
 
 function DebugSidebar() {
   const [didKeyPress, setDidKeyPress] = useState(false);
-  const { QuerySKUs, Clusters, selectedLocation, selectedAppointmentSlot } =
-    useStore();
+  const {
+    QuerySKUs,
+    Clusters,
+    selectedLocation,
+    selectedAppointmentSlot,
+    personalInformation,
+  } = useStore();
 
   useKeyPress(['Control', 'Shift', 'A'], () => {
     setDidKeyPress(!didKeyPress);
@@ -52,6 +57,19 @@ function DebugSidebar() {
             {selectedAppointmentSlot?.start_time
               ? format(new Date(selectedAppointmentSlot.start_time), 'HH:mm')
               : '-'}
+          </p>
+        </SidebarGroup>
+        <SidebarGroup>
+          <p>Personal Information</p>
+          <p>
+            {personalInformation?.vorname} {personalInformation?.nachname}
+          </p>
+          <p>{personalInformation?.geburtsdatum.toISOString()}</p>
+          <p>{personalInformation?.email}</p>
+          <p>{personalInformation?.ahvNummer}</p>
+          <p>{personalInformation?.strasse}</p>
+          <p>
+            {personalInformation?.plz} {personalInformation?.stadt}
           </p>
         </SidebarGroup>
       </SidebarContent>

@@ -1,10 +1,12 @@
+// In StickyPriceFooter.tsx
 import { ClassNameProp, IsVisibleProp } from '@/types.ts';
 import { cn } from '@/utils/utils.ts';
 import { Button } from '@/components/ui/button.tsx';
 import useStore from '@/state/state.ts';
 import { calculateTotalPriceWithCurrency } from '@/utils/calculateTotalPriceWithCurrency.ts';
 import { H14Semi, H20Semi } from '@/components/Typography.tsx';
-import { useMatchRoute } from '@tanstack/react-router';
+import { useMatchRoute, useNavigate } from '@tanstack/react-router';
+import { routeConfig } from '@/utils/constants.ts';
 
 type StickyPriceFooterProps = ClassNameProp & IsVisibleProp;
 
@@ -12,19 +14,27 @@ function StickyPriceFooter({
   className,
   isVisible = true,
 }: Readonly<StickyPriceFooterProps>) {
-  const { Clusters, selectedLocation } = useStore();
+  const store = useStore();
+  const { Clusters } = store;
   const matchRoute = useMatchRoute();
+  const navigator = useNavigate();
 
-  if (matchRoute({ to: '/*' })) {
+  const currentRoute = Object.entries(routeConfig).find(([route]) =>
+    matchRoute({ to: route }),
+  );
+
+  if (!currentRoute?.[1]) {
     return null;
   }
 
+  const [, config] = currentRoute;
+
   const content = (
     <div className={'flex justify-between items-center pb-3'}>
-      <H14Semi className={`${!isVisible ? 'text-transparent' : ''}`}>
+      <H14Semi className={cn({ 'text-transparent': !isVisible })}>
         Gesamt ({Clusters.length} Produkte)
       </H14Semi>
-      <H20Semi className={`${!isVisible ? 'text-transparent' : ''}`}>
+      <H20Semi className={cn({ 'text-transparent': !isVisible })}>
         {calculateTotalPriceWithCurrency(Clusters)}
       </H20Semi>
     </div>
@@ -39,6 +49,12 @@ function StickyPriceFooter({
     );
   }
 
+  const handleClick = () => {
+    if (config.nextRoute) {
+      navigator({ to: config.nextRoute }).then();
+    }
+  };
+
   return (
     <div
       className={cn(
@@ -47,8 +63,12 @@ function StickyPriceFooter({
       )}
     >
       {content}
-      <Button className={'w-full'} disabled={!selectedLocation}>
-        Weiter
+      <Button
+        className={'w-full'}
+        disabled={config.isDisabled?.(store) ?? false}
+        onClick={handleClick}
+      >
+        {config.buttonText}
       </Button>
     </div>
   );

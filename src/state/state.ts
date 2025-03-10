@@ -7,7 +7,7 @@ import {
   PersonalInformation,
 } from '@/types.ts';
 
-interface AppState {
+export interface AppState {
   QuerySKUs: string[];
   setQuerySKUs: (skus: string[]) => void;
   clearQuerySKUs: () => void;

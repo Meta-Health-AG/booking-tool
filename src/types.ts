@@ -1,3 +1,5 @@
+import { AppState } from '@/state/state.ts';
+
 export interface ClassNameProp {
   className?: string;
 }
@@ -74,3 +76,11 @@ export interface PersonalInformation {
   stadt: string;
   ahvNummer: string;
 }
+
+export type RouteConfigType = {
+  [key: string]: {
+    buttonText: string;
+    nextRoute: string;
+    isDisabled: (state: AppState) => boolean;
+  } | null;
+};

@@ -1,4 +1,6 @@
 import { cn } from '@/utils/utils.ts';
+import { AppState } from '@/state/state.ts';
+import { RouteConfigType } from '@/types.ts';
 
 export const SKELETON_ITEMS = ['skeleton-1', 'skeleton-2', 'skeleton-3'];
 
@@ -64,3 +66,30 @@ export const calendarStyling = {
   nav_button_previous: '!relative !left-0',
   nav_button_next: '!relative !right-0',
 };
+
+export const routeNavigationMap = {
+  '/login': '/personal-information',
+  '/personal-information': '/appointments',
+  '/appointments': '/locations',
+  '/locations': null,
+} as const;
+
+export const routeConfig: RouteConfigType = {
+  '/locations': {
+    buttonText: 'Termin auswählen',
+    nextRoute: '/appointments',
+    isDisabled: (state: AppState) => state.selectedLocation === null,
+  },
+  '/appointments': {
+    buttonText: 'Buchungsdetails hinzufügen',
+    nextRoute: '/personal-information',
+    isDisabled: (state: AppState) => state.selectedAppointmentSlot === null,
+  },
+  '/personal-information': {
+    buttonText: 'Zur Bestellübersicht',
+    nextRoute: '/overview',
+    isDisabled: (state: AppState) => state.personalInformation === null,
+  },
+  '/login': null,
+  '/*': null,
+} as const;

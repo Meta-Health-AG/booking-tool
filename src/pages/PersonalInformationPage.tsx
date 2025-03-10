@@ -36,6 +36,7 @@ import {
   SelectValue,
 } from '@/components/ui/select.tsx';
 import { Button } from '@/components/ui/button.tsx';
+import { Link } from '@tanstack/react-router';
 
 function PersonalInformationPage() {
   const setPersonalInformation = useStore(
@@ -69,9 +70,9 @@ function PersonalInformationPage() {
       <H2 className="mb-4">Persönliche Informationen</H2>
       <SmallText className="text-black mb-4">
         Bist du bereits bei YUUNIQ?{' '}
-        <span className="font-bold underline underline-offset-2">
+        <Link className="font-bold underline underline-offset-2" to={'/login'}>
           Melde dich an
-        </span>
+        </Link>
       </SmallText>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -158,6 +159,11 @@ function PersonalInformationPage() {
                             }}
                             locale={de}
                             className={cn('p-3')}
+                            disabled={[{ after: new Date() }]}
+                            initialFocus
+                            captionLayout="dropdown-buttons"
+                            fromYear={1900}
+                            toYear={new Date().getFullYear()}
                           />
                         </PopoverContent>
                       </Popover>
