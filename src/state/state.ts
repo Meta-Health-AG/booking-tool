@@ -24,6 +24,12 @@ export interface AppState {
   setPersonalInformation: (info: PersonalInformation) => void;
   auth0id: string | null;
   setAuth0id: (id: string | null) => void;
+  clearSelectedLocation: () => void;
+  clearFilteredLocations: () => void;
+  clearSelectedAppointmentSlot: () => void;
+  clearPersonalInformation: () => void;
+  clearAuth0id: () => void;
+  resetAll: () => void;
 }
 
 const useStore = create<AppState>()(
@@ -47,6 +53,22 @@ const useStore = create<AppState>()(
       setPersonalInformation: (info) => set({ personalInformation: info }),
       auth0id: null,
       setAuth0id: (id) => set({ auth0id: id }),
+      clearSelectedLocation: () => set({ selectedLocation: null }),
+      clearFilteredLocations: () => set({ filteredLocations: null }),
+      clearSelectedAppointmentSlot: () =>
+        set({ selectedAppointmentSlot: null }),
+      clearPersonalInformation: () => set({ personalInformation: null }),
+      clearAuth0id: () => set({ auth0id: null }),
+      resetAll: () =>
+        set({
+          QuerySKUs: [],
+          Clusters: [],
+          selectedLocation: null,
+          filteredLocations: null,
+          selectedAppointmentSlot: null,
+          personalInformation: null,
+          auth0id: null,
+        }),
     }),
     {
       name: 'yuuniq-booking',

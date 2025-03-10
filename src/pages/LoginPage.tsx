@@ -8,9 +8,18 @@ import { FormTextField } from '@/components/FormTextField.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { extractAuth0Id, useLogin } from '@/services/Auth0Service.ts';
 import useStore from '@/state/state.ts';
+import { useNavigate } from '@tanstack/react-router';
+import { useEffect } from 'react';
 
 function LoginPage() {
-  const setAuth0Id = useStore((state) => state.setAuth0id);
+  const { setAuth0id, clearPersonalInformation, auth0id } = useStore();
+  const navigator = useNavigate();
+
+  useEffect(() => {
+    if (auth0id) {
+      navigator({ to: '/overview' }).then();
+    }
+  }, [auth0id, navigator]);
 
   const form = useForm<Login>({
     resolver: zodResolver(loginFormSchema),
@@ -27,8 +36,13 @@ function LoginPage() {
       { email: data.email, password: data.password },
       {
         onSuccess: (response) => {
-          setAuth0Id(extractAuth0Id(response.access_token));
-          // TODO redirect to overview page
+          try {
+            setAuth0id(extractAuth0Id(response.access_token));
+            clearPersonalInformation();
+            navigator({ to: '/overview' }).then();
+          } catch (error) {
+            console.error('Auth0 ID konnte nicht extrahiert werden', error);
+          }
         },
         onError: (error) => {
           console.error('Login fehlgeschlagen', error);

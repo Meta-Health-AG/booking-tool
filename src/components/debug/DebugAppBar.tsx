@@ -17,6 +17,7 @@ function DebugSidebar() {
     selectedLocation,
     selectedAppointmentSlot,
     personalInformation,
+    auth0id,
   } = useStore();
 
   useKeyPress(['Control', 'Shift', 'A'], () => {
@@ -67,7 +68,7 @@ function DebugSidebar() {
           </p>
           <p>
             {personalInformation?.geburtsdatum
-              ? personalInformation.geburtsdatum.toISOString()
+              ? personalInformation.geburtsdatum.toString()
               : ''}
           </p>
           <p>{personalInformation?.email ?? ''}</p>
@@ -76,6 +77,10 @@ function DebugSidebar() {
           <p>
             {personalInformation?.plz ?? ''} {personalInformation?.stadt ?? ''}
           </p>
+        </SidebarGroup>
+        <SidebarGroup>
+          <p>Auth0ID</p>
+          <p>{auth0id ?? ''}</p>
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>

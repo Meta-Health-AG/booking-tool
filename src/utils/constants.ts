@@ -72,6 +72,8 @@ export const routeNavigationMap = {
   '/personal-information': '/appointments',
   '/appointments': '/locations',
   '/locations': null,
+  '/overview': '/personal-information',
+  '/*': null,
 } as const;
 
 export const routeConfig: RouteConfigType = {
@@ -83,12 +85,24 @@ export const routeConfig: RouteConfigType = {
   '/appointments': {
     buttonText: 'Buchungsdetails hinzufügen',
     nextRoute: '/personal-information',
-    isDisabled: (state: AppState) => state.selectedAppointmentSlot === null,
+    isDisabled: (state: AppState) =>
+      state.selectedLocation === null || state.selectedAppointmentSlot === null,
   },
   '/personal-information': {
     buttonText: 'Zur Bestellübersicht',
     nextRoute: '/overview',
-    isDisabled: (state: AppState) => state.personalInformation === null,
+    isDisabled: (state: AppState) =>
+      state.selectedLocation === null ||
+      state.selectedAppointmentSlot === null ||
+      state.personalInformation === null,
+  },
+  '/overview': {
+    buttonText: 'Mark Forster',
+    nextRoute: '/overview',
+    isDisabled: (state: AppState) =>
+      state.selectedLocation === null ||
+      state.selectedAppointmentSlot === null ||
+      state.personalInformation === null,
   },
   '/login': null,
   '/*': null,

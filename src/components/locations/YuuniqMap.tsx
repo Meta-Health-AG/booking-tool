@@ -19,6 +19,7 @@ interface YuuniqMapProps extends React.ComponentProps<'div'> {
   onMarkerClick: (location: Location) => void;
   onCenterChanged: (center: { lat: number; lng: number }) => void;
   onZoomChanged: (zoom: number) => void;
+  gestureHandling?: 'none' | 'greedy' | 'cooperative' | 'auto';
 }
 
 function YuuniqMap({
@@ -29,6 +30,7 @@ function YuuniqMap({
   onMarkerClick,
   onCenterChanged,
   onZoomChanged,
+  gestureHandling,
 }: Readonly<YuuniqMapProps>) {
   const { selectedLocation } = useStore();
 
@@ -53,7 +55,7 @@ function YuuniqMap({
               style={{ width: '100%', height: '100%' }}
               center={center}
               zoom={zoom}
-              gestureHandling={'greedy'}
+              gestureHandling={gestureHandling || 'greedy'}
               disableDefaultUI={true}
               mapTypeControl={false}
               keyboardShortcuts={false}

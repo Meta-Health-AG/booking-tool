@@ -19,7 +19,8 @@ import {
 function LocationsPage() {
   useRedirectOnEmptyState();
   const { data: locations, isLoading } = useAllLocations();
-  const { setSelectedLocation, filteredLocations } = useStore();
+  const { setSelectedLocation, selectedLocation, filteredLocations } =
+    useStore();
   const [mapCenter, setMapCenter] = useState(defaultMapCenter);
   const [mapZoom, setMapZoom] = useState(defaultMapZoom);
 
@@ -40,8 +41,15 @@ function LocationsPage() {
       <YuuniqMap
         className="mb-10"
         locations={displayLocations}
-        center={mapCenter}
-        zoom={mapZoom}
+        center={{
+          lat: selectedLocation?.latitude
+            ? Number(selectedLocation.latitude)
+            : mapCenter.lat,
+          lng: selectedLocation?.longitude
+            ? Number(selectedLocation.longitude)
+            : mapCenter.lng,
+        }}
+        zoom={selectedLocation ? locationMapZoom : mapZoom}
         onMarkerClick={handleLocationSelect}
         onCenterChanged={(newCenter) => setMapCenter(newCenter)}
         onZoomChanged={(newZoom) => setMapZoom(newZoom)}

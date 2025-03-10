@@ -26,7 +26,7 @@ import {
   PersonalInformation,
 } from '@/utils/formSchemas.ts';
 import { CalendarIcon } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormTextField } from '@/components/FormTextField';
 import {
   Select,
@@ -36,14 +36,19 @@ import {
   SelectValue,
 } from '@/components/ui/select.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import { Link } from '@tanstack/react-router';
+import { Link, useNavigate } from '@tanstack/react-router';
 
 function PersonalInformationPage() {
-  const setPersonalInformation = useStore(
-    (state) => state.setPersonalInformation,
-  );
+  const { setPersonalInformation, auth0id } = useStore();
   const personalInformation = useStore((state) => state.personalInformation);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const navigator = useNavigate();
+
+  useEffect(() => {
+    if (auth0id) {
+      navigator({ to: '/overview' }).then();
+    }
+  }, [auth0id, navigator]);
 
   const form = useForm<PersonalInformation>({
     resolver: zodResolver(personalInformationFormSchema),
