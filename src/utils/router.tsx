@@ -10,6 +10,7 @@ import ErrorPage from '@/pages/ErrorPage.tsx';
 import AppointmentPickerPage from '@/pages/AppointmentPickerPage.tsx';
 import PersonalInformationPage from '@/pages/PersonalInformationPage.tsx';
 import LoginPage from '@/pages/LoginPage.tsx';
+import OverviewPage from '@/pages/OverviewPage.tsx';
 
 export const rootRoute = createRootRoute({
   component: Layout,
@@ -48,6 +49,12 @@ export const loginRoute = createRoute({
   component: LoginPage,
 });
 
+export const overviewRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/overview',
+  component: OverviewPage,
+});
+
 export const notFoundRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '*',
@@ -60,6 +67,7 @@ export const routeTree = rootRoute.addChildren([
   appointmentsRoute,
   personalInformationRoute,
   loginRoute,
+  overviewRoute,
   notFoundRoute,
 ]);
 

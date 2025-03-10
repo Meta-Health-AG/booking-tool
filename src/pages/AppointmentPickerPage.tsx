@@ -4,9 +4,7 @@ import { useState } from 'react';
 import YuuniqCalendar from '@/components/appointments/YuuniqCalendar.tsx';
 import TimeZoneDisplay from '@/components/appointments/TimeZoneDisplay.tsx';
 import AppointmentPicker from '@/components/appointments/AppointmentPicker.tsx';
-import { LocationCard } from '@/components/locations/LocationCard.tsx';
 import useStore from '@/state/state.ts';
-import Divider from '@/components/Divider.tsx';
 import BookingOverview from '@/components/BookingOverview.tsx';
 
 function AppointmentPickerPage() {
@@ -23,18 +21,10 @@ function AppointmentPickerPage() {
         <AppointmentPicker date={date} />
       </div>
       <H2 className="mb-3">Bestellübersicht</H2>
-      <div className="flex flex-col items-start w-full bg-white border border-input rounded-xl px-6 py-8">
-        <LocationCard
-          location={selectedLocation!}
-          className={'p-0 border-0 rounded-none'}
-        />
-        <Divider className={'my-6'} />
-        <div className={'w-full space-y-4'}>
-          {Clusters.map((cluster) => (
-            <BookingOverview key={cluster.cluster_id} cluster={cluster} />
-          ))}
-        </div>
-      </div>
+      <BookingOverview
+        selectedLocation={selectedLocation!}
+        clusters={Clusters}
+      />
     </PageBody>
   );
 }
