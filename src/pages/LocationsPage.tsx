@@ -15,6 +15,47 @@ import {
   locationMapZoom,
   SKELETON_ITEMS,
 } from '@/utils/constants.ts';
+import { StickyButton } from '@/components/StickyPriceFooter.tsx';
+
+interface LocationsListProps {
+  isMobile?: boolean;
+  isLoading: boolean;
+  filteredLocations: Location[];
+  displayLocations: Location[];
+  handleLocationSelect: (location: Location) => void;
+}
+
+const LocationsList: React.FC<LocationsListProps> = ({
+  isMobile = false,
+  isLoading,
+  filteredLocations,
+  displayLocations,
+  handleLocationSelect,
+}) => (
+  <div className="h-full flex flex-col">
+    <H3 className="mb-3 flex-shrink-0">
+      {filteredLocations ? 'Suchergebnisse' : 'Alle Standorte'}
+    </H3>
+    <div className="flex-1 overflow-y-auto min-h-0">
+      <div className="space-y-4 pr-4">
+        {isLoading
+          ? SKELETON_ITEMS.map((id) => <LocationCardSkeleton key={id} />)
+          : displayLocations?.map((location) => (
+              <LocationCard
+                key={`${location.name}-${location.address}`}
+                location={location}
+                onClick={handleLocationSelect}
+              />
+            ))}
+      </div>
+    </div>
+    {!isMobile && (
+      <div className="flex-shrink-0 pt-4">
+        <StickyButton />
+      </div>
+    )}
+  </div>
+);
 
 function LocationsPage() {
   useRedirectOnEmptyState();
@@ -36,39 +77,51 @@ function LocationsPage() {
 
   return (
     <PageBody>
-      <H2 className="mb-4">Wo möchten Sie sich testen lassen?</H2>
-      <SearchBar />
-      <YuuniqMap
-        className="mb-10"
-        locations={displayLocations}
-        center={{
-          lat: selectedLocation?.latitude
-            ? Number(selectedLocation.latitude)
-            : mapCenter.lat,
-          lng: selectedLocation?.longitude
-            ? Number(selectedLocation.longitude)
-            : mapCenter.lng,
-        }}
-        zoom={selectedLocation ? locationMapZoom : mapZoom}
-        onMarkerClick={handleLocationSelect}
-        onCenterChanged={(newCenter) => setMapCenter(newCenter)}
-        onZoomChanged={(newZoom) => setMapZoom(newZoom)}
-      />
+      <div className={'flex flex-col lg:flex-row lg:h-full lg:gap-8'}>
+        <div className={'order-1 lg:w-1/2 lg:h-full lg:flex lg:flex-col'}>
+          <div className="lg:flex-shrink-0 mb-4">
+            <H2 className="mb-4">Wo möchten Sie sich testen lassen?</H2>
+            <SearchBar />
+          </div>
 
-      <H3 className="mb-3">
-        {filteredLocations ? 'Suchergebnisse' : 'Alle Standorte'}
-      </H3>
+          {/* Desktop Locations List */}
+          <div className={'hidden lg:block lg:flex-1 lg:min-h-0 mt-4'}>
+            <LocationsList
+              isLoading={isLoading}
+              filteredLocations={filteredLocations!}
+              displayLocations={displayLocations!}
+              handleLocationSelect={handleLocationSelect}
+            />
+          </div>
+        </div>
 
-      <div className="space-y-4">
-        {isLoading
-          ? SKELETON_ITEMS.map((id) => <LocationCardSkeleton key={id} />)
-          : displayLocations?.map((location) => (
-              <LocationCard
-                key={`${location.name}-${location.address}`}
-                location={location}
-                onClick={handleLocationSelect}
-              />
-            ))}
+        <YuuniqMap
+          className="mb-10 order-2 lg:w-1/2 lg:h-full"
+          locations={displayLocations}
+          center={{
+            lat: selectedLocation?.latitude
+              ? Number(selectedLocation.latitude)
+              : mapCenter.lat,
+            lng: selectedLocation?.longitude
+              ? Number(selectedLocation.longitude)
+              : mapCenter.lng,
+          }}
+          zoom={selectedLocation ? locationMapZoom : mapZoom}
+          onMarkerClick={handleLocationSelect}
+          onCenterChanged={(newCenter) => setMapCenter(newCenter)}
+          onZoomChanged={(newZoom) => setMapZoom(newZoom)}
+        />
+
+        {/* Mobile Locations List */}
+        <div className={'order-3 lg:hidden'}>
+          <LocationsList
+            isMobile
+            isLoading={isLoading}
+            filteredLocations={filteredLocations!}
+            displayLocations={displayLocations!}
+            handleLocationSelect={handleLocationSelect}
+          />
+        </div>
       </div>
     </PageBody>
   );
