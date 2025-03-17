@@ -55,7 +55,7 @@ function YuuniqMap({
               style={{ width: '100%', height: '100%' }}
               center={center}
               zoom={zoom}
-              gestureHandling={gestureHandling || 'greedy'}
+              gestureHandling={gestureHandling ?? 'greedy'}
               disableDefaultUI={true}
               mapTypeControl={false}
               keyboardShortcuts={false}
@@ -81,7 +81,7 @@ function YuuniqMap({
                           : 'bg-white text-black',
                       )}
                     >
-                      {location.type === 'doctor' ? (
+                      {location.type === 'Yuuniq' ? (
                         <FaHouseMedical className="w-4 h-4" />
                       ) : (
                         <BiTestTube className="w-4 h-4" />

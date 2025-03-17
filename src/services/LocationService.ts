@@ -1,6 +1,7 @@
 import { Location } from '@/types.ts';
 import { mockLocationData } from '@/mock/MockLocationData.ts';
 import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 
 const fuzzyMatch = (str: string, search: string): boolean => {
   const searchLower = search.toLowerCase();
@@ -21,9 +22,10 @@ export const locationService = {
     );
   },
   findAllLocations: async (): Promise<Location[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-
-    return mockLocationData;
+    const response = await axios.get<Location[]>(
+      `${import.meta.env.VITE_BACKEND_URL}/healthcare_providers`,
+    );
+    return response.data;
   },
 };
 

@@ -36,22 +36,24 @@ function AppointmentPicker({
   }, [selectedLocation?.id, formattedDate, refetch]);
 
   return (
-    <div className={cn('space-y-4 w-full', className)}>
-      <div className="grid grid-cols-2 gap-y-2 gap-x-1 w-full">
-        {isLoading
-          ? APPOINTMENT_SKELETONS.map((item) => (
-              <AppointmentCardSkeleton key={item} />
-            ))
-          : availableTimeslots?.available_slots.map((slot) => (
-              <AppointmentCard
-                key={`${slot.start_time}-${slot.end_time}`}
-                appointmentSlot={slot}
-                isSelected={
-                  selectedAppointmentSlot?.start_time === slot.start_time
-                }
-                onClick={() => setSelectedAppointmentSlot(slot)}
-              />
-            ))}
+    <div className={cn('w-full', className)}>
+      <div className="lg:max-h-[400px] w-full overflow-y-auto">
+        <div className="grid grid-cols-2 gap-2 w-full">
+          {isLoading
+            ? APPOINTMENT_SKELETONS.map((item) => (
+                <AppointmentCardSkeleton key={item} />
+              ))
+            : availableTimeslots?.available_slots.map((slot) => (
+                <AppointmentCard
+                  key={`${slot.start_time}-${slot.end_time}`}
+                  appointmentSlot={slot}
+                  isSelected={
+                    selectedAppointmentSlot?.start_time === slot.start_time
+                  }
+                  onClick={() => setSelectedAppointmentSlot(slot)}
+                />
+              ))}
+        </div>
       </div>
     </div>
   );

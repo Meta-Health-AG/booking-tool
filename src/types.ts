@@ -21,7 +21,7 @@ export interface ClusterResponse {
   markers: string[];
 }
 
-type LocationType = 'doctor' | 'lab';
+type LocationType = 'Yuuniq' | 'Medisyn';
 
 export interface Location {
   id: string;
@@ -32,7 +32,7 @@ export interface Location {
   type: LocationType;
   latitude?: number;
   longitude?: number;
-  opening_hours: OpeningHoursWeekly;
+  opening_hours?: OpeningHoursWeekly;
 }
 
 export interface OpeningHoursDaily {

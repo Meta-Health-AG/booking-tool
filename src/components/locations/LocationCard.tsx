@@ -1,11 +1,6 @@
 import { FaHouseMedical } from 'react-icons/fa6';
 import { BiTestTube } from 'react-icons/bi';
-import {
-  LocationTitle,
-  SmallText,
-  OpeningTimeText,
-} from '@/components/Typography';
-import { formatOpeningHours } from '@/utils/openingHoursFormatter';
+import { LocationTitle, SmallText } from '@/components/Typography';
 import { Location } from '@/types';
 import useStore from '@/state/state.ts';
 import { cn } from '@/utils/utils.ts';
@@ -23,7 +18,7 @@ export function LocationCard({
 }: Readonly<LocationCardProps>) {
   const { selectedLocation } = useStore();
   const IconComponent =
-    location.type === 'doctor' ? FaHouseMedical : BiTestTube;
+    location.type === 'Yuuniq' ? FaHouseMedical : BiTestTube;
 
   const handleClick = () => {
     if (onClick) {
@@ -51,9 +46,6 @@ export function LocationCard({
         <SmallText>
           {location.address}, {location.zip} {location.city}
         </SmallText>
-        <OpeningTimeText>
-          {formatOpeningHours(location.opening_hours)}
-        </OpeningTimeText>
       </div>
     </button>
   );
