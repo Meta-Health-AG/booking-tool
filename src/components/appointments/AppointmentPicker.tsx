@@ -1,4 +1,4 @@
-import { ComponentProps, useEffect } from 'react';
+import { ComponentProps, useEffect, useRef, useState } from 'react';
 import { cn } from '@/utils/utils.ts';
 import { useAvailableTimeslots } from '@/services/AppointmentService.ts';
 import useStore from '@/state/state.ts';
@@ -21,6 +21,8 @@ function AppointmentPicker({
     setSelectedAppointmentSlot,
   } = useStore();
 
+  const [isChanging, setIsChanging] = useState(false);
+
   const formattedDate = date ? format(date, 'yyyy-MM-dd') : '';
 
   const {
@@ -29,17 +31,42 @@ function AppointmentPicker({
     refetch,
   } = useAvailableTimeslots(selectedLocation?.id ?? '', formattedDate);
 
+  const prevDateRef = useRef(formattedDate);
+  const prevMonthRef = useRef(date ? date.getMonth() : null);
+
   useEffect(() => {
-    if (selectedLocation?.id && formattedDate) {
-      refetch({ cancelRefetch: true }).then();
+    const currentMonth = date ? date.getMonth() : null;
+    const isMonthChange = currentMonth !== prevMonthRef.current;
+
+    if (isMonthChange) {
+      setIsChanging(true);
+      setSelectedAppointmentSlot(null);
+      prevMonthRef.current = currentMonth;
     }
-  }, [selectedLocation?.id, formattedDate, refetch]);
+
+    if (
+      selectedLocation?.id &&
+      formattedDate &&
+      (prevDateRef.current !== formattedDate || isMonthChange)
+    ) {
+      prevDateRef.current = formattedDate;
+      refetch({ cancelRefetch: true }).then(() => {
+        setIsChanging(false);
+      });
+    }
+  }, [
+    selectedLocation?.id,
+    formattedDate,
+    refetch,
+    setSelectedAppointmentSlot,
+    date,
+  ]);
 
   return (
     <div className={cn('w-full', className)}>
       <div className="lg:max-h-[400px] w-full overflow-y-auto">
         <div className="grid grid-cols-2 gap-2 w-full">
-          {isLoading
+          {isLoading || isChanging || !date
             ? APPOINTMENT_SKELETONS.map((item) => (
                 <AppointmentCardSkeleton key={item} />
               ))
@@ -58,5 +85,4 @@ function AppointmentPicker({
     </div>
   );
 }
-
 export default AppointmentPicker;

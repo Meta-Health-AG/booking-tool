@@ -7,6 +7,9 @@ import AppointmentPicker from '@/components/appointments/AppointmentPicker.tsx';
 import useStore from '@/state/state.ts';
 import BookingOverview from '@/components/BookingOverview.tsx';
 import { StickyButton } from '@/components/StickyPriceFooter.tsx';
+import { de } from 'date-fns/locale';
+import { format } from 'date-fns';
+import { Skeleton } from '@/components/ui/skeleton';
 
 function AppointmentPickerPage() {
   const [date, setDate] = useState<Date | undefined>(new Date());
@@ -25,8 +28,19 @@ function AppointmentPickerPage() {
               className={'mb-6 lg:mb-0 lg:mr-6 lg:w-1/2'}
             />
             <div className="lg:w-2/3 lg:mx-auto">
-              <H2W600 className={'leading-8'}>Uhrzeit</H2W600>
-              <TimeZoneDisplay className={'mb-4'} />
+              {date ? (
+                <>
+                  <H2W600 className={'leading-8'}>
+                    Uhrzeiten am {format(date, 'dd.MM.yyyy', { locale: de })}
+                  </H2W600>
+                  <TimeZoneDisplay className={'mb-4'} />
+                </>
+              ) : (
+                <>
+                  <Skeleton className="h-8 w-48 mb-2" />
+                  <Skeleton className="h-5 w-36 mb-4" />
+                </>
+              )}
               <AppointmentPicker date={date} />
             </div>
           </div>

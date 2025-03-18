@@ -56,7 +56,12 @@ export const calendarStyling = {
   head_cell: 'w-full text-center font-semibold text-sm',
   row: 'flex w-full justify-between mt-2',
   cell: 'w-full flex items-center justify-center',
-  day: 'h-10 w-10 p-0 font-normal text-sm rounded-full aria-selected:opacity-100 hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground aria-selected:bg-primary aria-selected:text-white',
+  day: cn(
+    'h-10 w-10 p-0 font-normal text-sm rounded-full',
+    'hover:bg-accent hover:text-accent-foreground',
+    'focus:bg-accent focus:text-accent-foreground',
+    '[&[aria-selected]]:!bg-primary [&[aria-selected]]:!text-primary-foreground',
+  ),
   caption: 'flex justify-between relative items-center mb-5',
   caption_label: 'text-base font-semibold',
   nav: 'space-x-1 flex items-center ml-auto',
