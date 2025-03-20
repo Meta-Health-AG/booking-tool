@@ -21,7 +21,7 @@ export interface ClusterResponse {
   markers: string[];
 }
 
-type LocationType = 'Yuuniq' | 'Medisyn';
+export type BookingType = 'Yuuniq' | 'Medisyn';
 
 export interface Location {
   id: string;
@@ -29,7 +29,7 @@ export interface Location {
   address: string;
   city: string;
   zip: string;
-  type: LocationType;
+  type: BookingType;
   latitude?: number;
   longitude?: number;
   opening_hours?: OpeningHoursWeekly;
@@ -84,3 +84,34 @@ export type RouteConfigType = {
     isDisabled: (state: AppState) => boolean;
   } | null;
 };
+
+export interface Address {
+  street: string;
+  city: string;
+  zip_code: string;
+  country: string;
+}
+
+export interface Insurance {
+  ahv_number?: string;
+  insurance_number?: string;
+  insurance_card_number?: string;
+  insurance_company_name?: string;
+  insurance_company_ean?: string;
+}
+
+export interface BookingRequest {
+  patientFirstName?: string;
+  patientLastName?: string;
+  patientEmail?: string;
+  patientDateOfBirth?: string;
+  patientGender?: 'M' | 'F' | 'N';
+  patientAddress?: Address;
+  patientInsurance?: Insurance;
+  healthcareProviderId: string;
+  auth0Id?: string;
+  startDatetime: string;
+  endDatetime: string;
+  clusters: string[];
+  type: BookingType;
+}

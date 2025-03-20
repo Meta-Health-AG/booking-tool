@@ -102,7 +102,7 @@ export const routeConfig: RouteConfigType = {
       state.personalInformation === null,
   },
   '/overview': {
-    buttonText: 'Mark Forster',
+    buttonText: 'Buchung abschliessen',
     nextRoute: '/overview',
     isDisabled: (state: AppState) =>
       state.selectedLocation === null ||

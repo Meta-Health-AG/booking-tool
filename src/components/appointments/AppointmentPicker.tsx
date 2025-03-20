@@ -29,7 +29,11 @@ function AppointmentPicker({
     data: availableTimeslots,
     isLoading,
     refetch,
-  } = useAvailableTimeslots(selectedLocation?.id ?? '', formattedDate);
+  } = useAvailableTimeslots(
+    selectedLocation?.id ?? '',
+    formattedDate,
+    selectedLocation?.type,
+  );
 
   const prevDateRef = useRef(formattedDate);
   const prevMonthRef = useRef(date ? date.getMonth() : null);
@@ -64,7 +68,7 @@ function AppointmentPicker({
 
   return (
     <div className={cn('w-full', className)}>
-      <div className="lg:max-h-[400px] w-full overflow-y-auto">
+      <div className="lg:max-h-[300px] w-full overflow-y-auto">
         <div className="grid grid-cols-2 gap-2 w-full">
           {isLoading || isChanging || !date
             ? APPOINTMENT_SKELETONS.map((item) => (

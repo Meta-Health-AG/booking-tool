@@ -21,13 +21,13 @@ function AppointmentPickerPage() {
         {/* Linke Spalte */}
         <div className="flex-1">
           <H2 className="mb-4">Wähle einen Termin für deinen Test</H2>
-          <div className="flex flex-col lg:flex-row lg:justify-between lg:max-h-[430px] lg:overflow-hidden items-start w-full bg-white border border-input rounded-xl px-4 py-6 mb-6 lg:mb-10">
+          <div className="flex flex-col lg:flex-row lg:justify-between lg:max-h-[480px] lg:overflow-hidden items-start w-full bg-white border border-input rounded-xl px-4 py-6 mb-6 lg:mb-10">
             <YuuniqCalendar
               date={date}
               setDate={setDate}
               className={'mb-6 lg:mb-0 lg:mr-6 lg:w-1/2'}
             />
-            <div className="lg:w-2/3 lg:mx-auto">
+            <div className="w-full lg:w-2/3 lg:mx-auto">
               {date ? (
                 <>
                   <H2W600 className={'leading-8'}>
@@ -47,13 +47,13 @@ function AppointmentPickerPage() {
         </div>
 
         {/* Rechte Spalte */}
-        <div className="w-full lg:w-[380px]">
+        <div className="w-full lg:w-[430px]">
           <H2 className="mb-3">Bestellübersicht</H2>
           <BookingOverview
             selectedLocation={selectedLocation!}
             clusters={Clusters}
           />
-          <StickyButton />
+          <StickyButton className={'hidden lg:block mt-4'} />
         </div>
       </div>
     </PageBody>
