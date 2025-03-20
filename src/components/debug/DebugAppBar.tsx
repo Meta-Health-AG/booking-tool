@@ -68,7 +68,7 @@ function DebugSidebar() {
           </p>
           <p>
             {personalInformation?.geburtsdatum
-              ? personalInformation.geburtsdatum.toString()
+              ? personalInformation.geburtsdatum.toISOString()
               : ''}
           </p>
           <p>{personalInformation?.email ?? ''}</p>

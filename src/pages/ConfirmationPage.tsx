@@ -2,11 +2,22 @@ import { Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { PageBody } from '@/components/PageBody';
 import { FaIdCard } from 'react-icons/fa6';
-import { FaCreditCard } from 'react-icons/fa';
 import { MdRestaurant } from 'react-icons/md';
+import { useSuccessStore } from '@/state/success-state.ts';
+import { saveAs } from 'file-saver';
 
 export default function ConfirmationPage() {
-  const userEmail = 'kimberlybrown@outlook.com';
+  const { bookingResponse } = useSuccessStore();
+
+  const handleAddToCalendar = () => {
+    if (!bookingResponse?.ics) return;
+
+    const blob = new Blob([bookingResponse.ics], {
+      type: 'text/calendar;charset=utf-8',
+    });
+
+    saveAs(blob, `termin-${bookingResponse.booking_id}.ics`);
+  };
 
   return (
     <PageBody className="py-10">
@@ -28,12 +39,17 @@ export default function ConfirmationPage() {
             <p className="text-sm text-gray-500 mb-6">
               Vielen Dank. Die Details Ihres Termins werden an Ihre
               E-Mail-Adresse gesendet:{' '}
-              <span className="font-medium">{userEmail}</span>
+              <span className="font-medium">
+                {bookingResponse?.email ?? ''}
+              </span>
             </p>
 
             {/* Aktionsschaltflächen */}
             <div className="flex gap-3 w-full">
-              <Button className="flex-1 bg-black text-white hover:bg-gray-800">
+              <Button
+                className="flex-1 bg-black text-white hover:bg-gray-800"
+                onClick={handleAddToCalendar}
+              >
                 Zum Kalender hinzufügen
               </Button>
             </div>
@@ -67,19 +83,6 @@ export default function ConfirmationPage() {
                 <p className="font-medium">Ausweis mitbringen</p>
                 <p className="text-sm text-gray-500">
                   Amtlicher Lichtbildausweis erforderlich
-                </p>
-              </div>
-            </div>
-
-            {/* Versicherungskarte */}
-            <div className="flex items-center gap-4">
-              <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center">
-                <FaCreditCard className="w-5 h-5" />
-              </div>
-              <div>
-                <p className="font-medium">Versicherungskarte</p>
-                <p className="text-sm text-gray-500">
-                  Falls zutreffend, bringen Sie Ihre Versicherungskarte mit
                 </p>
               </div>
             </div>

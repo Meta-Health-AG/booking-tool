@@ -95,8 +95,8 @@ function LoginPage() {
               </Button>
 
               {loginMutation.isError && (
-                <div className="mt-4 text-red-500">
-                  Anmeldung fehlgeschlagen: {loginMutation.error.message}
+                <div className="mt-4 text-red-500 text-center">
+                  Anmeldung fehlgeschlagen
                 </div>
               )}
             </form>

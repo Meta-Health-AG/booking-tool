@@ -1,4 +1,6 @@
-import { ClassNameProp, IsVisibleProp } from '@/types.ts';
+'use client';
+
+import type { ClassNameProp, IsVisibleProp } from '@/types.ts';
 import { cn } from '@/utils/utils.ts';
 import { Button } from '@/components/ui/button.tsx';
 import useStore from '@/state/state.ts';
@@ -7,6 +9,8 @@ import { H14Semi, H20Semi } from '@/components/Typography.tsx';
 import { useMatchRoute, useNavigate } from '@tanstack/react-router';
 import { routeConfig } from '@/utils/constants.ts';
 import { useCreateBooking } from '@/services/BookingService.ts';
+import { useState } from 'react';
+import { Loader2 } from 'lucide-react';
 
 type StickyPriceFooterProps = ClassNameProp & IsVisibleProp;
 type StickyButtonProps = ClassNameProp & {
@@ -31,6 +35,7 @@ export function StickyButton({ className }: Readonly<StickyButtonProps>) {
   const matchRoute = useMatchRoute();
   const navigator = useNavigate();
   const createBooking = useCreateBooking();
+  const [isLoading, setIsLoading] = useState(false);
 
   const currentRoute = Object.entries(routeConfig).find(([route]) =>
     matchRoute({ to: route }),
@@ -46,41 +51,19 @@ export function StickyButton({ className }: Readonly<StickyButtonProps>) {
   }
 
   const handleClick = async () => {
-    if (route === '/overview') {
-      const {
-        selectedLocation,
-        selectedAppointmentSlot,
-        personalInformation,
-        auth0id,
-        Clusters,
-        resetAll,
-      } = store;
+    setIsLoading(true);
 
-      try {
-        console.log({
-          healthcareProviderId: selectedLocation!.id,
-          startDatetime: selectedAppointmentSlot!.start_time,
-          endDatetime: selectedAppointmentSlot!.end_time,
-          clusters: Clusters.map((cluster) => cluster.cluster_id),
-          type: selectedLocation!.type,
-          auth0Id: auth0id ?? '',
-          patientFirstName: personalInformation!.vorname,
-          patientLastName: personalInformation!.nachname,
-          patientEmail: personalInformation!.email,
-          patientDateOfBirth: personalInformation!.geburtsdatum
-            .toISOString()
-            .split('T')[0],
-          patientGender: transformGender(personalInformation!.geschlecht),
-          patientAddress: {
-            street: personalInformation!.strasse,
-            city: personalInformation!.stadt,
-            zip_code: personalInformation!.plz,
-            country: 'Schweiz',
-          },
-          patientInsurance: {
-            ahv_number: personalInformation!.ahvNummer,
-          },
-        });
+    try {
+      if (route === '/overview') {
+        const {
+          selectedLocation,
+          selectedAppointmentSlot,
+          personalInformation,
+          auth0id,
+          Clusters,
+          resetAll,
+        } = store;
+
         await createBooking.mutateAsync({
           healthcareProviderId: selectedLocation!.id,
           startDatetime: selectedAppointmentSlot!.start_time,
@@ -88,42 +71,78 @@ export function StickyButton({ className }: Readonly<StickyButtonProps>) {
           clusters: Clusters.map((cluster) => cluster.cluster_id),
           type: selectedLocation!.type,
           auth0Id: auth0id ?? '',
-          patientFirstName: personalInformation!.vorname,
-          patientLastName: personalInformation!.nachname,
-          patientEmail: personalInformation!.email,
-          patientDateOfBirth: personalInformation!.geburtsdatum
-            .toISOString()
-            .split('T')[0],
-          patientGender: transformGender(personalInformation!.geschlecht),
-          patientAddress: {
-            street: personalInformation!.strasse,
-            city: personalInformation!.stadt,
-            zip_code: personalInformation!.plz,
-            country: 'Schweiz',
-          },
-          patientInsurance: {
-            ahv_number: personalInformation!.ahvNummer,
-          },
+          ...(auth0id
+            ? {}
+            : {
+                patientFirstName: personalInformation!.vorname,
+                patientLastName: personalInformation!.nachname,
+                patientEmail: personalInformation!.email,
+                patientDateOfBirth: personalInformation!.geburtsdatum
+                  .toISOString()
+                  .split('T')[0],
+                patientGender: transformGender(personalInformation!.geschlecht),
+                patientAddress: {
+                  street: personalInformation!.strasse,
+                  city: personalInformation!.stadt,
+                  zip_code: personalInformation!.plz,
+                  country: 'Schweiz',
+                },
+                patientInsurance: {
+                  ahv_number: personalInformation!.ahvNummer,
+                },
+              }),
         });
 
+        history.replaceState({}, '', '/');
+        await navigator({ to: '/confirmation' });
         resetAll();
-        await navigator({ to: '/overview' });
-      } catch (error) {
-        console.error('Buchung fehlgeschlagen:', error);
-        // Hier können Sie einen Toast oder eine andere Fehlerbenachrichtigung anzeigen
+      } else if (config.nextRoute) {
+        await navigator({ to: config.nextRoute });
       }
-    } else if (config.nextRoute) {
-      navigator({ to: config.nextRoute }).then();
+    } catch (error) {
+      console.error('Buchung fehlgeschlagen:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
+  const isDisabled = (config.isDisabled?.(store) ?? false) || isLoading;
+
   return (
     <Button
-      className={cn('w-full', className)}
-      disabled={config.isDisabled?.(store) ?? false}
+      className={cn(
+        'w-full relative overflow-hidden transition-all duration-300',
+        {
+          'bg-opacity-90': isLoading,
+        },
+        className,
+      )}
+      disabled={isDisabled}
       onClick={handleClick}
     >
-      {config.buttonText}
+      <span
+        className={cn('flex items-center justify-center gap-2', {
+          'opacity-0': isLoading,
+        })}
+      >
+        {config.buttonText}
+      </span>
+
+      {isLoading && (
+        <span className="absolute inset-0 flex items-center justify-center">
+          <Loader2 className="h-5 w-5 animate-spin" />
+        </span>
+      )}
+
+      {isLoading && (
+        <span
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer"
+          style={{
+            backgroundSize: '200% 100%',
+            animation: 'shimmer 1.5s infinite linear',
+          }}
+        />
+      )}
     </Button>
   );
 }

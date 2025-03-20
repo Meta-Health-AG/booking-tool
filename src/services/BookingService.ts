@@ -1,9 +1,15 @@
 import { BookingRequest } from '@/types.ts';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import {
+  BookingSuccessResponse,
+  useSuccessStore,
+} from '@/state/success-state.ts';
 
 export const bookingService = {
-  createBooking: async (bookingData: Omit<BookingRequest, 'new_patient'>) => {
+  createBooking: async (
+    bookingData: Omit<BookingRequest, 'new_patient'>,
+  ): Promise<BookingSuccessResponse> => {
     try {
       const requestData: BookingRequest & { new_patient: boolean } = {
         ...bookingData,
@@ -13,12 +19,12 @@ export const bookingService = {
           : undefined,
       };
 
-      const response = await axios.post(
+      const { data } = await axios.post<BookingSuccessResponse>(
         `${import.meta.env.VITE_BACKEND_URL}/bookings`,
         requestData,
       );
 
-      return response.data;
+      return data;
     } catch (error) {
       console.error('Error creating booking:', error);
       throw error;
@@ -28,12 +34,19 @@ export const bookingService = {
 
 export const useCreateBooking = () => {
   const queryClient = useQueryClient();
+  const setBookingResponse = useSuccessStore(
+    (state) => state.setBookingResponse,
+  );
 
-  return useMutation({
-    mutationFn: (bookingData: Omit<BookingRequest, 'new_patient'>) =>
-      bookingService.createBooking(bookingData),
-    onSuccess: () => {
+  return useMutation<
+    BookingSuccessResponse,
+    Error,
+    Omit<BookingRequest, 'new_patient'>
+  >({
+    mutationFn: bookingService.createBooking,
+    onSuccess: (response) => {
       queryClient.invalidateQueries({ queryKey: ['appointments'] }).then();
+      setBookingResponse(response);
     },
   });
 };

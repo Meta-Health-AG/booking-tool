@@ -107,7 +107,7 @@ export const routeConfig: RouteConfigType = {
     isDisabled: (state: AppState) =>
       state.selectedLocation === null ||
       state.selectedAppointmentSlot === null ||
-      state.personalInformation === null,
+      (state.personalInformation === null && state.auth0id === null),
   },
   '/login': null,
   '/*': null,
