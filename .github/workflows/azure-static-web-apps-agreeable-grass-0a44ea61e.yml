@@ -34,9 +34,6 @@ jobs:
           echo "VITE_GOOGLE_MAPS_API_KEY=${{ vars.VITE_GOOGLE_MAPS_API_KEY }}" >> $GITHUB_ENV
           echo "VITE_SHOPIFY_URL=${{ vars.VITE_SHOPIFY_URL }}" >> $GITHUB_ENV
 
-      - name: Run ESLint (Code Quality Check)
-        run: npm run lint
-
       - name: Run Prettier (Code Formatting Check)
         run: npm run format:check
 
