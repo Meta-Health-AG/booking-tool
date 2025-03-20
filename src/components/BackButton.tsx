@@ -14,7 +14,11 @@ function BackButton({ onClick, className, isVisible }: BackButtonProps) {
   const navigator = useNavigate();
   const matchRoute = useMatchRoute();
 
-  if (matchRoute({ to: '/*' }) || !isVisible) {
+  if (
+    matchRoute({ to: '/*' }) ||
+    !isVisible ||
+    matchRoute({ to: '/confirmation' })
+  ) {
     return null;
   }
 

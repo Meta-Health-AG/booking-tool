@@ -35,12 +35,15 @@ export function StickyButton({ className }: Readonly<StickyButtonProps>) {
   const currentRoute = Object.entries(routeConfig).find(([route]) =>
     matchRoute({ to: route }),
   );
-
   if (!currentRoute?.[1]) {
     return null;
   }
 
   const [route, config] = currentRoute;
+
+  if (route === '/confirmation') {
+    return null;
+  }
 
   const handleClick = async () => {
     if (route === '/overview') {
@@ -130,6 +133,20 @@ function StickyPriceFooter({
   isVisible = true,
 }: Readonly<StickyPriceFooterProps>) {
   const { Clusters } = useStore();
+  const matchRoute = useMatchRoute();
+
+  const currentRoute = Object.entries(routeConfig).find(([route]) =>
+    matchRoute({ to: route }),
+  );
+  if (!currentRoute?.[1]) {
+    return null;
+  }
+
+  const [route] = currentRoute;
+
+  if (route === '/confirmation') {
+    return null;
+  }
 
   const content = (
     <div className={'flex justify-between items-center pb-3 lg:hidden'}>
