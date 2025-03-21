@@ -32,5 +32,9 @@
   "navigationFallback": {
     "rewrite": "/index.html",
     "exclude": ["/api/*", "/static/*"]
+  },
+  "mimeTypes": {
+    ".js": "application/javascript",
+    ".mjs": "application/javascript"
   }
 }
