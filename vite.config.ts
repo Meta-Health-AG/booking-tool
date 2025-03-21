@@ -8,6 +8,14 @@ import eslint from 'vite-plugin-eslint2';
 // https://vite.dev/config/
 export default defineConfig({
   base: './',
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+  define: {
+    'process.env': process.env,
+  },
   plugins: [
     react(),
     tailwindcss(),
@@ -17,9 +25,4 @@ export default defineConfig({
       exclude: [],
     }),
   ],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
-  },
 });
