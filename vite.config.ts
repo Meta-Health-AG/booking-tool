@@ -7,6 +7,7 @@ import eslint from 'vite-plugin-eslint2';
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: './',
   plugins: [
     react(),
     tailwindcss(),
