@@ -20,7 +20,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'
 
       - name: Install dependencies
         run: npm install
@@ -38,6 +38,7 @@ jobs:
           api_location: ''
           output_location: 'dist'
         env:
+          NODE_VERSION: 18
           VITE_AUTH0_CLIENT_ID: ${{ vars.VITE_AUTH0_CLIENT_ID }}
           VITE_AUTH0_DOMAIN: ${{ vars.VITE_AUTH0_DOMAIN }}
           VITE_BACKEND_URL: ${{ vars.VITE_BACKEND_URL }}
