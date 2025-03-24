@@ -1,5 +1,4 @@
 import { Location } from '@/types.ts';
-import { mockLocationData } from '@/mock/MockLocationData.ts';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
@@ -10,12 +9,13 @@ const fuzzyMatch = (str: string, search: string): boolean => {
 };
 
 export const locationService = {
-  searchLocations: async (searchTerm: string): Promise<Location[]> => {
-    await new Promise((resolve) => setTimeout(resolve, 500));
+  searchLocations: (
+    searchTerm: string,
+    allLocations: Location[],
+  ): Location[] => {
+    if (!searchTerm) return [];
 
-    if (!searchTerm) return mockLocationData;
-
-    return mockLocationData.filter(
+    return allLocations.filter(
       (location) =>
         fuzzyMatch(location.city, searchTerm) ||
         fuzzyMatch(location.name, searchTerm),
@@ -29,13 +29,17 @@ export const locationService = {
   },
 };
 
-export const useSearchLocations = (searchTerm: string) => {
+export const useSearchLocations = (
+  searchTerm: string,
+  allLocations: Location[],
+) => {
   return useQuery({
     queryKey: ['locations', 'search', searchTerm],
-    queryFn: () => locationService.searchLocations(searchTerm),
+    queryFn: () => locationService.searchLocations(searchTerm, allLocations),
     enabled: searchTerm.length > 0,
   });
 };
+
 export const useAllLocations = () => {
   return useQuery({
     queryKey: ['locations', 'all'],

@@ -157,3 +157,21 @@
 .animate-shimmer {
   animation: shimmer 2s infinite linear;
 }
+
+.rdp-chevron {
+  @apply fill-current w-5 h-5;
+}
+
+.rdp-root {
+  --rdp-accent-color: transparent;
+}
+
+.rdp-today {
+  color: #000000 !important;
+}
+
+.rdp-button_next,
+.rdp-button_previous {
+  --rdp-nav_button-width: 20;
+  --rdp-nav_button-height: 20;
+}

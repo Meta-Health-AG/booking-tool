@@ -6,10 +6,9 @@ import useStore from '@/state/state';
 
 export function SearchBar() {
   const [searchTerm, setSearchTerm] = useState('');
-  const { data: searchResults } = useSearchLocations(searchTerm);
-  const { setFilteredLocations } = useStore();
+  const { setFilteredLocations, allLocations } = useStore();
+  const { data: searchResults } = useSearchLocations(searchTerm, allLocations);
 
-  // Reagiere auf Änderungen der searchResults
   useEffect(() => {
     if (!searchTerm.trim()) {
       setFilteredLocations(null);

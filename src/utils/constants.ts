@@ -48,8 +48,7 @@ export const mapRestrictions = {
 };
 
 export const calendarStyling = {
-  months:
-    'flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0 w-full',
+  months: 'flex flex-col space-y-4 sm:space-x-4 sm:space-y-0 w-full',
   month: 'space-y-4 w-full',
   table: 'w-full border-collapse',
   head_row: 'flex w-full justify-between mb-1',
@@ -66,7 +65,7 @@ export const calendarStyling = {
   caption_label: 'text-base font-semibold',
   nav: 'space-x-1 flex items-center ml-auto',
   nav_button: cn(
-    'hover:bg-transparent hover:opacity-100 h-7 w-7 p-0 hover:opacity-100',
+    'hover:bg-transparent hover:opacity-100 p-0 hover:opacity-100',
   ),
   nav_button_previous: '!relative !left-0',
   nav_button_next: '!relative !right-0',
