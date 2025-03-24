@@ -1,9 +1,12 @@
 import * as React from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { DayPicker } from 'react-day-picker';
 
 import { cn } from '@/utils/utils';
 import { buttonVariants } from '@/components/ui/button';
+import {
+  CaptionLeftIcon,
+  CaptionRightIcon,
+} from '@/components/appointments/CalendarButtons.tsx';
 
 function Calendar({
   className,
@@ -26,7 +29,7 @@ function Calendar({
           'size-7 bg-transparent p-0 opacity-50 hover:opacity-100',
         ),
         nav_button_previous: 'absolute left-1',
-        nav_button_next: 'absolute right-1',
+        nav_button_next: 'absolute right-1 bg-red-300',
         table: 'w-full border-collapse space-x-1',
         head_row: 'flex',
         head_cell:
@@ -58,12 +61,8 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        IconLeft: ({ className, ...props }) => (
-          <ChevronLeft className={cn('size-4', className)} {...props} />
-        ),
-        IconRight: ({ className, ...props }) => (
-          <ChevronRight className={cn('size-4', className)} {...props} />
-        ),
+        PreviousMonthButton: CaptionLeftIcon,
+        NextMonthButton: CaptionRightIcon,
       }}
       {...props}
     />

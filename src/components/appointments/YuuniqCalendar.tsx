@@ -1,10 +1,6 @@
 import { calendarStyling } from '@/utils/constants.ts';
 import { Calendar } from '@/components/ui/calendar.tsx';
 import { de } from 'date-fns/locale';
-import {
-  IconLeft,
-  IconRight,
-} from '@/components/appointments/CalendarButtons.tsx';
 import { cn } from '@/utils/utils.ts';
 import { useAvailableDates } from '@/services/AppointmentService.ts';
 import { CalendarSkeleton } from '@/components/appointments/CalendarSkeleton.tsx';
@@ -112,12 +108,7 @@ function YuuniqCalendar({
       locale={de}
       className={cn('w-full p-0', className)}
       classNames={calendarStyling}
-      components={{
-        IconLeft,
-        IconRight,
-      }}
       showOutsideDays={false}
-      fromDate={today}
       disabled={(date) => !isDateAvailable(date)}
       onMonthChange={handleMonthChange}
       month={currentMonth}

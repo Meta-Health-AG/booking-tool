@@ -5,7 +5,7 @@ import { useAllLocations } from '@/services/LocationService';
 import { SearchBar } from '@/components/locations/SearchBar.tsx';
 import { LocationCardSkeleton } from '@/components/locations/LocationCardSkeleton.tsx';
 import { LocationCard } from '@/components/locations/LocationCard.tsx';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, FC, useEffect } from 'react';
 import { Location } from '@/types';
 import useStore from '@/state/state.ts';
 import { PageBody } from '@/components/PageBody.tsx';
@@ -25,7 +25,7 @@ interface LocationsListProps {
   handleLocationSelect: (location: Location) => void;
 }
 
-const LocationsList: React.FC<LocationsListProps> = ({
+const LocationsList: FC<LocationsListProps> = ({
   isMobile = false,
   isLoading,
   filteredLocations,
@@ -60,10 +60,20 @@ const LocationsList: React.FC<LocationsListProps> = ({
 function LocationsPage() {
   useRedirectOnEmptyState();
   const { data: locations, isLoading } = useAllLocations();
-  const { setSelectedLocation, selectedLocation, filteredLocations } =
-    useStore();
+  const {
+    setAllLocations,
+    setSelectedLocation,
+    selectedLocation,
+    filteredLocations,
+  } = useStore();
   const [mapCenter, setMapCenter] = useState(defaultMapCenter);
   const [mapZoom, setMapZoom] = useState(defaultMapZoom);
+
+  useEffect(() => {
+    if (locations) {
+      setAllLocations(locations);
+    }
+  }, [locations]);
 
   const handleLocationSelect = useCallback((location: Location) => {
     setSelectedLocation(location);
@@ -79,13 +89,17 @@ function LocationsPage() {
     <PageBody>
       <div className={'flex flex-col lg:flex-row lg:h-full lg:gap-8'}>
         <div className={'order-1 lg:w-1/2 lg:h-full lg:flex lg:flex-col'}>
-          <div className="lg:flex-shrink-0 mb-4">
+          <div className="lg:flex-shrink-0 mb-4 lg:w-2/3 lg:ml-auto">
             <H2 className="mb-4">Wo möchten Sie sich testen lassen?</H2>
             <SearchBar />
           </div>
 
           {/* Desktop Locations List */}
-          <div className={'hidden lg:block lg:flex-1 lg:min-h-0 mt-4'}>
+          <div
+            className={
+              'hidden lg:block lg:flex-1 lg:min-h-0 lg:w-2/3 lg:ml-auto mt-4'
+            }
+          >
             <LocationsList
               isLoading={isLoading}
               filteredLocations={filteredLocations!}

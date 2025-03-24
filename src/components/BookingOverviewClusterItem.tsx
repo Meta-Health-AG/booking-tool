@@ -13,7 +13,7 @@ function BookingOverviewClusterItem({
 }: Readonly<BookingOverviewProps>) {
   return (
     <div
-      className={cn('flex items-center justify-between w-full', className)}
+      className={cn('flex items-start justify-between w-full', className)}
       key={cluster.cluster_id}
     >
       <div>
