@@ -1,5 +1,5 @@
 import { BookingRequest } from '@/types.ts';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import {
   BookingSuccessResponse,
@@ -30,6 +30,20 @@ export const bookingService = {
       throw error;
     }
   },
+
+  getBookingByOrderNumber: async (orderNumber: string): Promise<string> => {
+    try {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/bookings/${orderNumber}`,
+      );
+      console.log(data);
+
+      return 'kababa';
+    } catch (error) {
+      console.error('Error fetching booking by order number:', error);
+      throw error;
+    }
+  },
 };
 
 export const useCreateBooking = () => {
@@ -48,5 +62,13 @@ export const useCreateBooking = () => {
       queryClient.invalidateQueries({ queryKey: ['appointments'] }).then();
       setBookingResponse(response);
     },
+  });
+};
+
+export const useGetBookingByOrderNumber = (orderNumber: string) => {
+  return useQuery({
+    queryKey: ['bookings', orderNumber],
+    queryFn: () => bookingService.getBookingByOrderNumber(orderNumber),
+    enabled: orderNumber.length > 0,
   });
 };

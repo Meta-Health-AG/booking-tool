@@ -14,6 +14,8 @@ export interface AppState {
   Clusters: ClusterResponse[];
   setClusters: (clusters: ClusterResponse[]) => void;
   clearClusters: () => void;
+  allLocations: Location[];
+  setAllLocations: (locations: Location[]) => void;
   selectedLocation: Location | null;
   setSelectedLocation: (location: Location | null) => void;
   filteredLocations: Location[] | null;
@@ -41,6 +43,8 @@ const useStore = create<AppState>()(
       Clusters: [],
       setClusters: (clusters) => set({ Clusters: clusters }),
       clearClusters: () => set({ Clusters: [] }),
+      allLocations: [],
+      setAllLocations: (locations) => set({ allLocations: locations }),
       selectedLocation: null,
       setSelectedLocation: (location) => set({ selectedLocation: location }),
       filteredLocations: null,
