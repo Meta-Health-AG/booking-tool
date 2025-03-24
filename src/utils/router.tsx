@@ -12,6 +12,7 @@ import PersonalInformationPage from '@/pages/PersonalInformationPage.tsx';
 import LoginPage from '@/pages/LoginPage.tsx';
 import OverviewPage from '@/pages/OverviewPage.tsx';
 import ConfirmationPage from '@/pages/ConfirmationPage.tsx';
+import DeleteAppointmentPage from '@/pages/DeleteAppointmentPage.tsx';
 
 export const rootRoute = createRootRoute({
   component: Layout,
@@ -68,6 +69,12 @@ export const notFoundRoute = createRoute({
   component: ErrorPage,
 });
 
+export const deleteAppointmentRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/delete-appointment/$id',
+  component: DeleteAppointmentPage,
+});
+
 export const routeTree = rootRoute.addChildren([
   entryRoute,
   locationsRoute,
@@ -76,14 +83,13 @@ export const routeTree = rootRoute.addChildren([
   loginRoute,
   overviewRoute,
   confirmationRoute,
+  deleteAppointmentRoute,
   notFoundRoute,
 ]);
 
 export const router = createRouter({
   routeTree,
   defaultPreload: 'intent',
-  defaultPendingComponent: () => <div>Loading...</div>,
-  defaultErrorComponent: () => <ErrorPage />,
 });
 
 declare module '@tanstack/react-router' {

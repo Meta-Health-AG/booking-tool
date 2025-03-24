@@ -27,6 +27,12 @@ export const locationService = {
     );
     return response.data;
   },
+  findLocationById: async (id: string): Promise<Location> => {
+    const response = await axios.get<Location>(
+      `${import.meta.env.VITE_BACKEND_URL}/healthcare_providers/${id}?include_details=true`,
+    );
+    return response.data;
+  },
 };
 
 export const useSearchLocations = (
@@ -44,5 +50,13 @@ export const useAllLocations = () => {
   return useQuery({
     queryKey: ['locations', 'all'],
     queryFn: () => locationService.findAllLocations(),
+  });
+};
+
+export const useLocationById = (id: string) => {
+  return useQuery({
+    queryKey: ['locations', 'byId', id],
+    queryFn: () => locationService.findLocationById(id),
+    enabled: id.length > 0,
   });
 };
