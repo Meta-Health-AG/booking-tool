@@ -14,14 +14,14 @@ function Layout() {
       <DebugSidebar />
       <div className="w-full min-h-screen flex flex-col bg-background">
         <Header />
-        <BackButton
-          isVisible={true}
-          className="pt-4 md:pt-8 pb-4 md:pb-6 px-3 md:px-3.5"
-        />
         <div
           className={`flex-1 w-full ${!isLocationsPage ? 'max-w-6xl mx-auto' : ''}
  px-3 md:px-4 lg:px-6`}
         >
+          <BackButton
+            isVisible={true}
+            className="pt-4 md:pt-8 pb-4 md:pb-6 px-3 md:px-3.5"
+          />
           <Outlet />
         </div>
         <StickyPriceFooter isVisible={false} className="md:hidden" />
