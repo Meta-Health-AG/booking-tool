@@ -12,23 +12,12 @@ import {
 } from '@/components/ui/form';
 import { PageBody } from '@/components/PageBody';
 import { H2, SmallText } from '@/components/Typography';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
 import useStore from '@/state/state';
-import { DayPicker } from 'react-day-picker';
-import { de } from 'date-fns/locale';
-import { cn } from '@/utils/utils';
-import { format } from 'date-fns';
-import 'react-day-picker/dist/style.css';
 import {
   personalInformationFormSchema,
   type PersonalInformation,
 } from '@/utils/formSchemas.ts';
-import { CalendarIcon } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { FormTextField } from '@/components/FormTextField';
 import {
   Select,
@@ -37,7 +26,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select.tsx';
-import { Button } from '@/components/ui/button.tsx';
 import { Link, useNavigate } from '@tanstack/react-router';
 import { StickyButton } from '@/components/StickyPriceFooter.tsx';
 import BookingOverview from '@/components/BookingOverview.tsx';
@@ -51,7 +39,6 @@ function PersonalInformationPage() {
     selectedAppointmentSlot,
   } = useStore();
   const personalInformation = useStore((state) => state.personalInformation);
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const navigator = useNavigate();
 
   useEffect(() => {
@@ -158,65 +145,111 @@ function PersonalInformationPage() {
                     )}
                   />
 
-                  <FormField
-                    control={form.control}
-                    name="geburtsdatum"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Geburtsdatum</FormLabel>
-                        <Popover
-                          open={isCalendarOpen}
-                          onOpenChange={setIsCalendarOpen}
-                        >
-                          <PopoverTrigger asChild>
-                            <Button
-                              variant="outline"
-                              className="bg-white text-sm rounded-xl border-input py-6 px-4 w-full justify-start text-left font-normal"
-                            >
-                              <CalendarIcon className="mr-2 h-4 w-4" />
-                              {field.value ? (
-                                format(field.value, 'PPP', { locale: de })
-                              ) : (
-                                <span>MM.DD.YYYY</span>
-                              )}
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0" align="start">
-                            <DayPicker
-                              mode="single"
-                              selected={field.value}
-                              defaultMonth={field.value || undefined}
-                              onSelect={(date) => {
-                                if (date) {
-                                  const localDate = new Date(
-                                    Date.UTC(
-                                      date.getFullYear(),
-                                      date.getMonth(),
-                                      date.getDate(),
-                                      12,
-                                      0,
-                                      0,
-                                      0,
-                                    ),
-                                  );
-                                  field.onChange(localDate);
-                                }
-                                setIsCalendarOpen(false);
+                  <div className="space-y-2">
+                    <FormLabel>Geburtsdatum</FormLabel>
+                    <FormField
+                      control={form.control}
+                      name="geburtsdatum"
+                      render={({ field }) => {
+                        // Extract day, month, year from the date or use empty values
+                        const date = field.value ? new Date(field.value) : null;
+
+                        // Function to update the date when any field changes
+                        const updateDate = (
+                          day: number,
+                          month: number,
+                          year: number,
+                        ) => {
+                          // Create a new date with the provided values
+                          const newDate = new Date(year, month, day);
+                          field.onChange(newDate);
+                        };
+
+                        return (
+                          <div className="flex space-x-2">
+                            {/* Day input */}
+                            <input
+                              type="text"
+                              inputMode="numeric"
+                              maxLength={2}
+                              placeholder="Tag"
+                              defaultValue={date ? date.getDate() : ''}
+                              onChange={(e) => {
+                                const value = e.target.value.replace(/\D/g, '');
+                                e.target.value = value;
+                                const day = Number.parseInt(value || '1', 10);
+                                const month = date ? date.getMonth() : 0;
+                                const year = date
+                                  ? date.getFullYear()
+                                  : new Date().getFullYear();
+                                updateDate(day, month, year);
                               }}
-                              locale={de}
-                              className={cn('p-3')}
-                              disabled={[{ after: new Date() }]}
-                              initialFocus
-                              captionLayout="dropdown-buttons"
-                              fromYear={1900}
-                              toYear={new Date().getFullYear()}
+                              className="bg-white number-input-reset text-sm rounded-xl border border-input py-0 px-4 w-20"
                             />
-                          </PopoverContent>
-                        </Popover>
-                        <FormMessage />
-                      </FormItem>
+
+                            {/* Month dropdown */}
+                            <Select
+                              defaultValue={
+                                date ? date.getMonth().toString() : '0'
+                              }
+                              onValueChange={(value) => {
+                                const month = Number.parseInt(value, 10);
+                                const day = date ? date.getDate() : 1;
+                                const year = date
+                                  ? date.getFullYear()
+                                  : new Date().getFullYear();
+                                updateDate(day, month, year);
+                              }}
+                            >
+                              <SelectTrigger className="bg-white text-sm rounded-xl border-input py-6 px-4 w-32">
+                                <SelectValue placeholder="Monat" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="0">Januar</SelectItem>
+                                <SelectItem value="1">Februar</SelectItem>
+                                <SelectItem value="2">März</SelectItem>
+                                <SelectItem value="3">April</SelectItem>
+                                <SelectItem value="4">Mai</SelectItem>
+                                <SelectItem value="5">Juni</SelectItem>
+                                <SelectItem value="6">Juli</SelectItem>
+                                <SelectItem value="7">August</SelectItem>
+                                <SelectItem value="8">September</SelectItem>
+                                <SelectItem value="9">Oktober</SelectItem>
+                                <SelectItem value="10">November</SelectItem>
+                                <SelectItem value="11">Dezember</SelectItem>
+                              </SelectContent>
+                            </Select>
+
+                            {/* Year input */}
+                            <input
+                              type="text"
+                              inputMode="numeric"
+                              maxLength={4}
+                              placeholder="Jahr"
+                              defaultValue={date ? date.getFullYear() : ''}
+                              onChange={(e) => {
+                                const value = e.target.value.replace(/\D/g, '');
+                                e.target.value = value;
+                                const year = Number.parseInt(
+                                  value || new Date().getFullYear().toString(),
+                                  10,
+                                );
+                                const day = date ? date.getDate() : 1;
+                                const month = date ? date.getMonth() : 0;
+                                updateDate(day, month, year);
+                              }}
+                              className="bg-white text-sm number-input-reset rounded-xl border border-input py-6 px-4 w-24"
+                            />
+                          </div>
+                        );
+                      }}
+                    />
+                    {form.formState.errors.geburtsdatum && (
+                      <FormMessage>
+                        {form.formState.errors.geburtsdatum.message}
+                      </FormMessage>
                     )}
-                  />
+                  </div>
                 </div>
 
                 <FormTextField
