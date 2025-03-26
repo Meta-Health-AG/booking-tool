@@ -37,7 +37,6 @@ function BackButton({ onClick, className, isVisible }: BackButtonProps) {
         if (nextRoute === null) {
           window.location.href = import.meta.env.VITE_SHOPIFY_URL;
         } else if (currentRoute === '/overview') {
-          // Spezielle Behandlung für /overview
           const targetRoute = auth0id
             ? '/appointments'
             : '/personal-information';
@@ -51,13 +50,15 @@ function BackButton({ onClick, className, isVisible }: BackButtonProps) {
   };
 
   return (
-    <button
-      className={clsx('', className)}
-      onClick={handleClick}
-      aria-label="Zurück"
-    >
-      <FaChevronLeft height={20} width={20} />
-    </button>
+    <div className={clsx('flex', className)}>
+      <button
+        className={'flex cursor-pointer'}
+        onClick={handleClick}
+        aria-label="Zurück"
+      >
+        <FaChevronLeft height={20} width={20} />
+      </button>
+    </div>
   );
 }
 

@@ -60,12 +60,8 @@ const LocationsList: FC<LocationsListProps> = ({
 function LocationsPage() {
   useRedirectOnEmptyState();
   const { data: locations, isLoading } = useAllLocations();
-  const {
-    setAllLocations,
-    setSelectedLocation,
-    selectedLocation,
-    filteredLocations,
-  } = useStore();
+  const { setAllLocations, setSelectedLocation, filteredLocations } =
+    useStore();
   const [mapCenter, setMapCenter] = useState(defaultMapCenter);
   const [mapZoom, setMapZoom] = useState(defaultMapZoom);
 
@@ -78,7 +74,8 @@ function LocationsPage() {
   const handleLocationSelect = useCallback((location: Location) => {
     setSelectedLocation(location);
     if (location.latitude && location.longitude) {
-      setMapCenter({ lat: location.latitude, lng: location.longitude });
+      const newCenter = { lat: location.latitude, lng: location.longitude };
+      setMapCenter(newCenter);
       setMapZoom(locationMapZoom);
     }
   }, []);
@@ -112,15 +109,9 @@ function LocationsPage() {
         <YuuniqMap
           className="mb-10 order-2 lg:w-1/2 lg:h-full"
           locations={displayLocations}
-          center={{
-            lat: selectedLocation?.latitude
-              ? Number(selectedLocation.latitude)
-              : mapCenter.lat,
-            lng: selectedLocation?.longitude
-              ? Number(selectedLocation.longitude)
-              : mapCenter.lng,
-          }}
-          zoom={selectedLocation ? locationMapZoom : mapZoom}
+          center={mapCenter}
+          zoom={mapZoom}
+          gestureHandling="greedy"
           onMarkerClick={handleLocationSelect}
           onCenterChanged={(newCenter) => setMapCenter(newCenter)}
           onZoomChanged={(newZoom) => setMapZoom(newZoom)}

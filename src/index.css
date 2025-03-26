@@ -175,3 +175,10 @@
   --rdp-nav_button-width: 20;
   --rdp-nav_button-height: 20;
 }
+
+.number-input-reset {
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+  appearance: textfield;
+  margin: 0;
+}

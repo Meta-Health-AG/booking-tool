@@ -61,6 +61,7 @@ function YuuniqMap({
               keyboardShortcuts={false}
               restriction={mapRestrictions}
               onCameraChanged={handleCameraChange}
+              clickableIcons={false}
             >
               {locations.map((location) =>
                 location.latitude && location.longitude ? (
@@ -70,7 +71,6 @@ function YuuniqMap({
                       lat: location.latitude,
                       lng: location.longitude,
                     }}
-                    title={location.name}
                     onClick={() => onMarkerClick(location)}
                   >
                     <div
