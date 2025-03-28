@@ -18,10 +18,12 @@ function Layout() {
           className={`flex-1 w-full ${!isLocationsPage ? 'max-w-6xl mx-auto' : ''}
  px-3 md:px-4 lg:px-6`}
         >
-          <BackButton
-            isVisible={true}
-            className="pt-4 md:pt-8 pb-4 md:pb-6 px-3 md:px-3.5"
-          />
+          {!isLocationsPage ? (
+            <BackButton
+              isVisible={true}
+              className="pt-4 md:pt-8 pb-4 md:pb-6 px-3 md:px-3.5"
+            />
+          ) : null}
           <Outlet />
         </div>
         <StickyPriceFooter isVisible={false} className="md:hidden" />
