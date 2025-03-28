@@ -184,7 +184,7 @@ function PersonalInformationPage() {
                                   : new Date().getFullYear();
                                 updateDate(day, month, year);
                               }}
-                              className="bg-white number-input-reset text-sm rounded-xl border border-input py-0 px-4 w-20"
+                              className="bg-white number-input-reset text-sm text-center rounded-xl border border-input py-0 px-4 w-20"
                             />
 
                             {/* Month dropdown */}
@@ -238,7 +238,7 @@ function PersonalInformationPage() {
                                 const month = date ? date.getMonth() : 0;
                                 updateDate(day, month, year);
                               }}
-                              className="bg-white text-sm number-input-reset rounded-xl border border-input py-6 px-4 w-24"
+                              className="bg-white text-sm number-input-reset text-center rounded-xl border border-input px-4 w-24"
                             />
                           </div>
                         );
