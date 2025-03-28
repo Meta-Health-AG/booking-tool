@@ -16,6 +16,7 @@ import {
   SKELETON_ITEMS,
 } from '@/utils/constants.ts';
 import { StickyButton } from '@/components/StickyPriceFooter.tsx';
+import BackButton from '@/components/BackButton.tsx';
 
 interface LocationsListProps {
   isMobile?: boolean;
@@ -84,9 +85,10 @@ function LocationsPage() {
 
   return (
     <PageBody>
-      <div className={'flex flex-col lg:flex-row lg:h-full lg:gap-8'}>
+      <div className={'flex flex-col lg:flex-row lg:h-full lg:gap-8 mt-8'}>
         <div className={'order-1 lg:w-1/2 lg:h-full lg:flex lg:flex-col'}>
           <div className="lg:flex-shrink-0 mb-4 lg:w-2/3 lg:ml-auto">
+            <BackButton isVisible={true} className="pb-4" />
             <H2 className="mb-4">Wo möchten Sie sich testen lassen?</H2>
             <SearchBar />
           </div>

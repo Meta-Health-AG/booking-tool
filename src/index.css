@@ -176,9 +176,6 @@
   --rdp-nav_button-height: 20;
 }
 
-.number-input-reset {
-  -webkit-appearance: none;
-  -moz-appearance: textfield;
-  appearance: textfield;
-  margin: 0;
+button.rdp-day_button:disabled {
+  @apply h-9 w-9 rounded-full px-0.5 text-gray-400 cursor-not-allowed;
 }

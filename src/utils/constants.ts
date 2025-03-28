@@ -56,10 +56,10 @@ export const calendarStyling = {
   row: 'flex w-full justify-between mt-2',
   cell: 'w-full flex items-center justify-center',
   day: cn(
-    'h-10 w-10 p-0 font-normal text-sm rounded-full',
+    'h-9 w-9 p-0 font-normal text-sm rounded-full',
     'hover:bg-accent hover:text-accent-foreground',
     'focus:bg-accent focus:text-accent-foreground',
-    '[&[aria-selected]]:!bg-primary [&[aria-selected]]:!text-primary-foreground',
+    '[&[aria-selected]]:!bg-primary [&[aria-selected]]:!text-primary-foreground text-center',
   ),
   caption: 'flex justify-between relative items-center mb-5',
   caption_label: 'text-base font-semibold',
@@ -69,6 +69,7 @@ export const calendarStyling = {
   ),
   nav_button_previous: '!relative !left-0',
   nav_button_next: '!relative !right-0',
+  day_disabled: 'text-muted-foreground opacity-50',
 };
 
 export const routeNavigationMap = {
