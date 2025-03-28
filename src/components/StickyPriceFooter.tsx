@@ -78,7 +78,7 @@ export function StickyButton({ className }: Readonly<StickyButtonProps>) {
                 patientLastName: personalInformation!.nachname,
                 patientEmail: personalInformation!.email,
                 patientDateOfBirth: personalInformation!.geburtsdatum
-                  .toISOString()
+                  .toString()
                   .split('T')[0],
                 patientGender: transformGender(personalInformation!.geschlecht),
                 patientAddress: {
@@ -112,9 +112,6 @@ export function StickyButton({ className }: Readonly<StickyButtonProps>) {
     <Button
       className={cn(
         'w-full relative overflow-hidden transition-all duration-300',
-        {
-          'bg-opacity-90': isLoading,
-        },
         className,
       )}
       disabled={isDisabled}
@@ -132,16 +129,6 @@ export function StickyButton({ className }: Readonly<StickyButtonProps>) {
         <span className="absolute inset-0 flex items-center justify-center">
           <Loader2 className="h-5 w-5 animate-spin" />
         </span>
-      )}
-
-      {isLoading && (
-        <span
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer"
-          style={{
-            backgroundSize: '200% 100%',
-            animation: 'shimmer 1.5s infinite linear',
-          }}
-        />
       )}
     </Button>
   );
